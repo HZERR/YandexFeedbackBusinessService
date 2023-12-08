@@ -1,0 +1,13 @@
+.container {
+    -fx-background-color: rgba(0, 0, 0, 0.75);
+}
+
+.clickButton {
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-text-fill: rgba(0, 0, 0, 0.85);
+}
+
+.clickButton:hover {
+    -fx-background-color: rgb(143, 143, 143);
+    -fx-text-fill: rgba(0, 0, 0, 0.85);
+}
