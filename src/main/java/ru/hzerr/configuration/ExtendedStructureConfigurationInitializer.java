@@ -1,16 +1,18 @@
 package ru.hzerr.configuration;
 
-import ru.hzerr.fx.engine.configuration.application.Initializer;
-import ru.hzerr.fx.engine.core.InitializationException;
+import ru.hzerr.fx.engine.core.ApplicationContextInitializationException;
+import ru.hzerr.fx.engine.core.annotation.ApplicationLogProvider;
 import ru.hzerr.fx.engine.core.annotation.Include;
-import ru.hzerr.fx.engine.core.annotation.Registered;
+import ru.hzerr.fx.engine.core.context.initializer.IExtendedAnnotationConfigApplicationContextInitializer;
+import ru.hzerr.fx.engine.logging.provider.ILogProvider;
 
 import java.io.IOException;
 
-@Registered
-public class ExtendedStructureConfigurationInitializer implements Initializer {
+public class ExtendedStructureConfigurationInitializer implements IExtendedAnnotationConfigApplicationContextInitializer {
 
     private final IExtendedStructureConfiguration structureConfiguration;
+
+    private ILogProvider logProvider;
 
     @Include
     public ExtendedStructureConfigurationInitializer(IExtendedStructureConfiguration structureConfiguration) {
@@ -18,17 +20,24 @@ public class ExtendedStructureConfigurationInitializer implements Initializer {
     }
 
     @Override
-    public void initialize() throws InitializationException {
+    public void onInitialize() {
         try {
             structureConfiguration.getDatabaseDirectory().create();
+            logProvider.getLogger().debug("Директория файлов баз данных иницилизирована");
         } catch (IOException e) {
-            throw new InitializationException("Database directory не создан", e);
+            throw new ApplicationContextInitializationException("Database directory не создан", e);
         }
 
         try {
             structureConfiguration.getMailRuDatabaseFile().create();
+            logProvider.getLogger().debug("Файл базы данных аккаунтов Mail.Ru инициализирован");
         } catch (IOException e) {
-            throw new InitializationException("Mail.Ru Database File не создан", e);
+            throw new ApplicationContextInitializationException("Mail.Ru Database File не создан", e);
         }
+    }
+
+    @ApplicationLogProvider
+    public void setLogProvider(ILogProvider logProvider) {
+        this.logProvider = logProvider;
     }
 }

@@ -4,6 +4,7 @@ import ru.hzerr.fx.engine.core.annotation.Include;
 import ru.hzerr.fx.engine.core.annotation.Registered;
 import ru.hzerr.model.MailRuAccount;
 
+@Registered
 public class MailRuRepository implements IEmailRepository<MailRuAccount> {
 
     private IEmailDatabase<MailRuAccount> database;

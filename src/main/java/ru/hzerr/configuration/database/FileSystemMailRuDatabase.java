@@ -2,8 +2,10 @@ package ru.hzerr.configuration.database;
 
 import org.apache.commons.configuration2.PropertiesConfiguration;
 import ru.hzerr.fx.engine.core.annotation.IncludeAs;
+import ru.hzerr.fx.engine.core.annotation.Registered;
 import ru.hzerr.model.MailRuAccount;
 
+@Registered
 public class FileSystemMailRuDatabase implements IEmailDatabase<MailRuAccount> {
 
     private PropertiesConfiguration configuration;

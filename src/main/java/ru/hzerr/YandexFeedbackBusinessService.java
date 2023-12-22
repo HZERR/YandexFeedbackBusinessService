@@ -9,6 +9,7 @@ import ru.hzerr.configuration.database.FileSystemMailRuDatabase;
 import ru.hzerr.configuration.database.MailRuDatabaseFileLoader;
 import ru.hzerr.configuration.database.MailRuRepository;
 import ru.hzerr.controller.YandexFeedbackBusinessServiceController;
+import ru.hzerr.controller.processor.CreateMailRuAccountEventProcessor;
 import ru.hzerr.fx.engine.core.FXEngine;
 import ru.hzerr.fx.engine.core.context.IExtendedAnnotationConfigApplicationContext;
 import ru.hzerr.fx.engine.core.entity.Entity;
@@ -19,14 +20,6 @@ public class YandexFeedbackBusinessService extends FXEngine {
     @Override
     protected IExtendedAnnotationConfigApplicationContext createApplicationContext() {
         return createAutomaticExtendedAnnotationConfigApplicationContextProvider(YandexFeedbackBusinessService.class).getContext();
-    }
-
-    @Override
-    protected void onInit() throws Exception {
-        context.getBean(ExtendedStructureConfigurationInitializer.class).initialize();
-        context.register(MailRuDatabaseFileLoader.class);
-        context.register(FileSystemMailRuDatabase.class);
-        context.register(MailRuRepository.class);
     }
 
     @Override

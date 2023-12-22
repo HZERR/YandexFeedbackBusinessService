@@ -3,9 +3,10 @@ package ru.hzerr.generator;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.apache.commons.lang3.RandomUtils;
-import ru.hzerr.fx.engine.core.annotation.Include;
+import ru.hzerr.configuration.RegisteredPrototype;
+import ru.hzerr.fx.engine.core.annotation.ApplicationLogProvider;
 import ru.hzerr.fx.engine.core.annotation.Registered;
-import ru.hzerr.fx.engine.logging.factory.ILogProvider;
+import ru.hzerr.fx.engine.logging.provider.ILogProvider;
 import ru.hzerr.model.Gender;
 
 import java.io.IOException;
@@ -76,17 +77,13 @@ public class RandomDataToolsGenerator implements IGenerator<Object> {
 
                 return new GenerationResult(responseAsJsonObject);
             } else
-                throw new GenerationException("Invalid status code: " + response.statusCode());
+                throw new GenerationException(STR."Invalid status code: \{response.statusCode()}");
         } catch (IOException | URISyntaxException e) {
             throw new GenerationException(e);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             throw new GenerationException(e);
         }
-    }
-
-    public static RandomDataToolsGenerator newGenerator() {
-        return new RandomDataToolsGenerator();
     }
 
     private void addParameter(String param) {
@@ -96,7 +93,7 @@ public class RandomDataToolsGenerator implements IGenerator<Object> {
             params = params + "," + param;
     }
 
-    @Include
+    @ApplicationLogProvider
     public void setLogProvider(ILogProvider logProvider) {
         this.logProvider = logProvider;
     }

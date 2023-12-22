@@ -24,7 +24,7 @@ public class ExtendedStructureConfiguration implements IExtendedStructureConfigu
 
     @Override
     public BaseDirectory getProgramDirectory() {
-        return new HDirectory(SystemInfo.getUserHome() + File.separator + "YandexFeedbackBusinessService");
+        return new HDirectory(STR."\{SystemInfo.getUserHome()}\{File.separator}YandexFeedbackBusinessService");
     }
 
     @Override

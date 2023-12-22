@@ -4,11 +4,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import ru.hzerr.controller.processor.CreateMailRuAccountEventProcessor;
-import ru.hzerr.fx.engine.core.annotation.FXController;
-import ru.hzerr.fx.engine.core.annotation.FXEntity;
-import ru.hzerr.fx.engine.core.annotation.Registered;
+import ru.hzerr.fx.engine.core.annotation.*;
 import ru.hzerr.fx.engine.core.entity.Controller;
 import ru.hzerr.fx.engine.core.language.Localization;
+import ru.hzerr.model.MailRuAccount;
 
 @Registered
 @FXController
@@ -22,11 +21,13 @@ public class MailRuAccountMasterController extends Controller {
     @FXML
     private Button changeSelectedAccount;
     @FXML
-    private ListView<?> accountsList;
+    private ListView<MailRuAccount> accountsList;
+
+    private CreateMailRuAccountEventProcessor createMailRuAccountEventProcessor;
 
     @Override
     protected void onInit() {
-        createAccountButton.setOnAction(new CreateMailRuAccountEventProcessor());
+        createAccountButton.setOnAction(createMailRuAccountEventProcessor);
     }
 
     @Override
@@ -37,5 +38,10 @@ public class MailRuAccountMasterController extends Controller {
     @Override
     protected String id() {
         return null;
+    }
+
+    @Include
+    public void setCreateMailRuAccountEventProcessor(CreateMailRuAccountEventProcessor createMailRuAccountEventProcessor) {
+        this.createMailRuAccountEventProcessor = createMailRuAccountEventProcessor;
     }
 }

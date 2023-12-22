@@ -12,6 +12,7 @@ import ru.hzerr.fx.engine.core.Loader;
 import ru.hzerr.fx.engine.core.annotation.Include;
 import ru.hzerr.fx.engine.core.annotation.Registered;
 
+@Registered
 public class MailRuDatabaseFileLoader implements Loader<PropertiesConfiguration> {
 
     private FileBasedConfigurationBuilder<PropertiesConfiguration> builder;
@@ -26,7 +27,7 @@ public class MailRuDatabaseFileLoader implements Loader<PropertiesConfiguration>
                         .setListDelimiterHandler(new DefaultListDelimiterHandler(';'))
                         .setIncludesAllowed(true));
 
-        this.location = configuration.getSoftwareConfigurationFile().getLocation();
+        this.location = configuration.getMailRuDatabaseFile().getLocation();
     }
 
     @Override

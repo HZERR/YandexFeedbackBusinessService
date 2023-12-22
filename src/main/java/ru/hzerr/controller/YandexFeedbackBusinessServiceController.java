@@ -11,7 +11,7 @@ import ru.hzerr.fx.engine.core.annotation.Registered;
 import ru.hzerr.fx.engine.core.entity.Controller;
 import ru.hzerr.fx.engine.core.entity.SpringLoadMetaData;
 import ru.hzerr.fx.engine.core.language.Localization;
-import ru.hzerr.fx.engine.logging.factory.ILogProvider;
+import ru.hzerr.fx.engine.logging.provider.ILogProvider;
 
 @Registered
 @FXController
