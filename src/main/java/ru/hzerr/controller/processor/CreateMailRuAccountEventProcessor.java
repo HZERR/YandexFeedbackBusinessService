@@ -3,7 +3,7 @@ package ru.hzerr.controller.processor;
 import com.microsoft.playwright.*;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ListView;
-import ru.hzerr.configuration.database.IEmailRepository;
+import ru.hzerr.configuration.database.repository.IEmailRepository;
 import ru.hzerr.fx.engine.core.annotation.ApplicationLogProvider;
 import ru.hzerr.fx.engine.core.annotation.Include;
 import ru.hzerr.fx.engine.core.annotation.Registered;
@@ -46,26 +46,26 @@ public class CreateMailRuAccountEventProcessor extends ActionEventProcessor {
 
         logProvider.getLogger().debug("Запускаем браузер...");
         try (Playwright playwright = Playwright.create()) {
-            try (Browser browser = playwright.webkit().launch(new BrowserType.LaunchOptions().setHeadless(false))) {
+            try (Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false))) {
                 try (BrowserContext context = browser.newContext()) {
                     try (Page page = context.newPage()) {
                         logProvider.getLogger().debug("Заполняем форму...");
-                        MailRuAccount account = new GenerationResultToMailRuAccountConverter().convert(generationResult);
+                        MailRuAccount account = mailRuAccountConverter.convert(generationResult);
                         page.navigate("https://account.mail.ru/signup");
                         page.fill("#fname", account.getFirstName());
                         page.fill("#lname", account.getLastName());
                         String[] dateOfBirth = account.getDateOfBirth().split("\\.");
 
-                        page.click("#root > div > div.-iGylzk8u50zKdna3C_sh > div:nth-child(4) > div > div > div > div > form > div:nth-child(7) > div:nth-child(2) > div > div > div > div.select-0-2-127.daySelect-0-2-128 > div > div > div");
+                        page.click("//*[@id=\"root\"]/div/div[4]/div[4]/div/div/div/div/form/div[6]/div[2]/div/div/div/div[1]");
                         page.click(STR."#react-select-2-option-\{Integer.parseInt(dateOfBirth[0]) - 1}");
-                        page.click("#root > div > div.-iGylzk8u50zKdna3C_sh > div:nth-child(4) > div > div > div > div > form > div:nth-child(7) > div:nth-child(2) > div > div > div > div.base-0-2-99");
+                        page.click("//*[@id=\"root\"]/div/div[4]/div[4]/div/div/div/div/form/div[6]/div[2]/div/div/div/div[3]");
                         page.click(STR."#react-select-3-option-\{Integer.parseInt(dateOfBirth[1]) - 1}");
-                        page.click("#root > div > div.-iGylzk8u50zKdna3C_sh > div:nth-child(4) > div > div > div > div > form > div:nth-child(7) > div:nth-child(2) > div > div > div > div.select-0-2-127.yearSelect-0-2-129");
+                        page.click("//*[@id=\"root\"]/div/div[4]/div[4]/div/div/div/div/form/div[6]/div[2]/div/div/div/div[5]");
                         page.click(STR."#react-select-4-option-\{2023 - Integer.parseInt(dateOfBirth[2])}");
 
                         page.click(account.getGender() == Gender.FEMALE ?
-                                "#root > div > div.-iGylzk8u50zKdna3C_sh > div:nth-child(4) > div > div > div > div > form > div:nth-child(10) > div:nth-child(2) > div > label:nth-child(3) > div.radio-0-2-146" :
-                                "#root > div > div.-iGylzk8u50zKdna3C_sh > div:nth-child(4) > div > div > div > div > form > div:nth-child(10) > div:nth-child(2) > div > label:nth-child(1) > div.radio-0-2-146");
+                                "//*[@id=\"root\"]/div/div[4]/div[4]/div/div/div/div/form/div[9]/div[2]/div/label[2]/div[1]" :
+                                "//*[@id=\"root\"]/div/div[4]/div[4]/div/div/div/div/form/div[9]/div[2]/div/label[1]/div[1]", new Page.ClickOptions().setTimeout(100000D));
 
                         do {
                             account.setLogin(loginGenerator.generate());
@@ -92,8 +92,8 @@ public class CreateMailRuAccountEventProcessor extends ActionEventProcessor {
                         account.setCreated(true);
                         account.setCreatedDate(LocalDateTime.now());
                         logProvider.getLogger().debug(STR."Аккаунт \{account.getLogin()} успешно создан");
-                        logProvider.getLogger().debug(STR."Регистрация аккаунта \{account.getLogin()} в системе...");
                         repository.addEmail(account);
+                        logProvider.getLogger().debug(STR."Аккаунт \{account.getLogin()} успешно зарегистрирован в базе данных");
                         accounts.getItems().add(account);
                     }
                 }
@@ -119,5 +119,9 @@ public class CreateMailRuAccountEventProcessor extends ActionEventProcessor {
     @Include
     public void setRandomDataGenerator(RandomDataToolsGenerator randomDataGenerator) {
         this.randomDataGenerator = randomDataGenerator;
+    }
+
+    public void setAccounts(ListView<MailRuAccount> accounts) {
+        this.accounts = accounts;
     }
 }

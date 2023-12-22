@@ -1,4 +1,4 @@
-package ru.hzerr.configuration.database;
+package ru.hzerr.configuration.database.repository;
 
 public interface IEmailRepository<T> {
 

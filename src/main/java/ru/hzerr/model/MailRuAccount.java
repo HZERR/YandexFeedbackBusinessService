@@ -1,8 +1,17 @@
 package ru.hzerr.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import ru.hzerr.util.JsonToStringStyle;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class MailRuAccount {
+public class MailRuAccount implements Serializable {
 
     private boolean created;
     private CreationStatus creationStatus;
@@ -102,5 +111,62 @@ public class MailRuAccount {
 
     public void setBlocked(boolean blocked) {
         this.blocked = blocked;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o instanceof MailRuAccount account) {
+            return new EqualsBuilder()
+                    .append(created, account.created)
+                    .append(blocked, account.blocked)
+                    .append(creationStatus, account.creationStatus)
+                    .append(createdDate, account.createdDate)
+                    .append(login, account.login)
+                    .append(password, account.password)
+                    .append(reservedEmail, account.reservedEmail)
+                    .append(firstName, account.firstName)
+                    .append(lastName, account.lastName)
+                    .append(dateOfBirth, account.dateOfBirth)
+                    .append(gender, account.gender)
+                    .isEquals();
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(created)
+                .append(creationStatus)
+                .append(createdDate)
+                .append(login)
+                .append(password)
+                .append(reservedEmail)
+                .append(firstName)
+                .append(lastName)
+                .append(dateOfBirth)
+                .append(gender)
+                .append(blocked)
+                .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, new JsonToStringStyle())
+                .append("created", created)
+                .append("creationStatus", creationStatus)
+                .append("createdDate", createdDate)
+                .append("login", login)
+                .append("password", password)
+                .append("reservedEmail", reservedEmail)
+                .append("firstName", firstName)
+                .append("lastName", lastName)
+                .append("dateOfBirth", dateOfBirth)
+                .append("gender", gender)
+                .append("blocked", blocked)
+                .toString();
     }
 }

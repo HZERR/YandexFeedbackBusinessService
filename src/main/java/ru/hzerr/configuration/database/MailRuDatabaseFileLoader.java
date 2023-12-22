@@ -1,8 +1,11 @@
 package ru.hzerr.configuration.database;
 
-import org.apache.commons.configuration2.PropertiesConfiguration;
+import org.apache.commons.configuration2.*;
+import org.apache.commons.configuration2.beanutils.BeanHelper;
 import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
+import org.apache.commons.configuration2.builder.XMLBuilderProperties;
 import org.apache.commons.configuration2.builder.fluent.Parameters;
+import org.apache.commons.configuration2.builder.fluent.XMLBuilderParameters;
 import org.apache.commons.configuration2.convert.DefaultListDelimiterHandler;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +16,7 @@ import ru.hzerr.fx.engine.core.annotation.Include;
 import ru.hzerr.fx.engine.core.annotation.Registered;
 
 @Registered
-public class MailRuDatabaseFileLoader implements Loader<PropertiesConfiguration> {
+public class MailRuDatabaseFileLoader implements Loader<FileBasedConfiguration> {
 
     private FileBasedConfigurationBuilder<PropertiesConfiguration> builder;
     private String location;
@@ -21,18 +24,17 @@ public class MailRuDatabaseFileLoader implements Loader<PropertiesConfiguration>
     @Include
     public MailRuDatabaseFileLoader(IExtendedStructureConfiguration configuration) {
         builder = new FileBasedConfigurationBuilder<>(PropertiesConfiguration.class)
-                .configure(new Parameters().properties()
+                .configure(new Parameters().fileBased()
                         .setFile(configuration.getMailRuDatabaseFile().asIOFile())
                         .setThrowExceptionOnMissing(true)
-                        .setListDelimiterHandler(new DefaultListDelimiterHandler(';'))
-                        .setIncludesAllowed(true));
+                        .setListDelimiterHandler(new DefaultListDelimiterHandler(';')));
 
         this.location = configuration.getMailRuDatabaseFile().getLocation();
     }
 
     @Override
     @Bean("mailRuDatabaseFile")
-    public PropertiesConfiguration load() throws LoadException {
+    public FileBasedConfiguration load() throws LoadException {
         builder.setAutoSave(true);
         try {
             return builder.getConfiguration();

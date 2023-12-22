@@ -3,6 +3,7 @@ package ru.hzerr.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import ru.hzerr.configuration.database.repository.IEmailRepository;
 import ru.hzerr.controller.processor.CreateMailRuAccountEventProcessor;
 import ru.hzerr.fx.engine.core.annotation.*;
 import ru.hzerr.fx.engine.core.entity.Controller;
@@ -24,9 +25,12 @@ public class MailRuAccountMasterController extends Controller {
     private ListView<MailRuAccount> accountsList;
 
     private CreateMailRuAccountEventProcessor createMailRuAccountEventProcessor;
+    private IEmailRepository<MailRuAccount> repository;
 
     @Override
     protected void onInit() {
+        accountsList.getItems().add(repository.getEmail("hSoA8wgJZHpu"));
+        createMailRuAccountEventProcessor.setAccounts(accountsList);
         createAccountButton.setOnAction(createMailRuAccountEventProcessor);
     }
 
@@ -43,5 +47,10 @@ public class MailRuAccountMasterController extends Controller {
     @Include
     public void setCreateMailRuAccountEventProcessor(CreateMailRuAccountEventProcessor createMailRuAccountEventProcessor) {
         this.createMailRuAccountEventProcessor = createMailRuAccountEventProcessor;
+    }
+
+    @Include
+    public void setRepository(IEmailRepository<MailRuAccount> repository) {
+        this.repository = repository;
     }
 }
