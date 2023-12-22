@@ -6,9 +6,9 @@ import ru.hzerr.fx.engine.core.context.IExtendedAnnotationConfigApplicationConte
 import ru.hzerr.fx.engine.core.context.registrar.ExtendedAnnotationConfigApplicationContextSequentialRegistrar;
 
 @Registered
-public class YandexFeedbackBusinessServiceSequentialInitializer extends ExtendedAnnotationConfigApplicationContextSequentialRegistrar {
+public class YandexFeedbackBusinessServiceSequentialRegistrar extends ExtendedAnnotationConfigApplicationContextSequentialRegistrar {
 
-    public YandexFeedbackBusinessServiceSequentialInitializer(IExtendedAnnotationConfigApplicationContext context) {
+    public YandexFeedbackBusinessServiceSequentialRegistrar(IExtendedAnnotationConfigApplicationContext context) {
         super(context);
     }
 
