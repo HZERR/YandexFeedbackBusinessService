@@ -1,19 +1,19 @@
 package ru.hzerr.controller;
 
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import ru.hzerr.fx.engine.core.FXEngine;
-import ru.hzerr.fx.engine.core.annotation.ApplicationLogProvider;
 import ru.hzerr.fx.engine.core.annotation.FXController;
 import ru.hzerr.fx.engine.core.annotation.FXEntity;
 import ru.hzerr.fx.engine.core.annotation.Registered;
+import ru.hzerr.fx.engine.core.annotation.as.ApplicationLogProvider;
 import ru.hzerr.fx.engine.core.entity.Controller;
 import ru.hzerr.fx.engine.core.entity.SpringLoadMetaData;
-import ru.hzerr.fx.engine.core.language.Localization;
+import ru.hzerr.fx.engine.core.language.ILocalization;
 import ru.hzerr.fx.engine.logging.provider.ILogProvider;
 
-@Registered
 @FXController
 @FXEntity(fxml = "yandexFeedbackBusinessService.fxml", internationalization = "yandexFeedbackBusinessService.json", theme = "yandexFeedbackBusinessService.css")
 public class YandexFeedbackBusinessServiceController extends Controller {
@@ -28,7 +28,7 @@ public class YandexFeedbackBusinessServiceController extends Controller {
                 .thenFXAccept(mailRuAccountMasterControllerParentEntity -> {
                     logProvider.getLogger().debug("Добавление Mail.Ru Account Master Tab...");
                     mailRuAccountManagerTab.setContent(mailRuAccountMasterControllerParentEntity.getNode());
-                    getContent(TabPane.class).getTabs().add(0, mailRuAccountManagerTab);
+                    getContent(TabPane.class).getTabs().addFirst(mailRuAccountManagerTab);
                 }).exceptionallyAsync(t -> {
                     t.printStackTrace();
                     return null;
@@ -36,8 +36,8 @@ public class YandexFeedbackBusinessServiceController extends Controller {
     }
 
     @Override
-    public void onChangeLanguage(Localization localization) {
-        mailRuAccountManagerTab.setText(localization.getConfiguration().getString("mailRuAccountMaster"));
+    public void onChangeLanguage(ILocalization localization) {
+        mailRuAccountManagerTab.setText(localization.getConfiguration().getString("mailRuAccountMasterTabName"));
     }
 
     @Override

@@ -1,5 +1,6 @@
 package ru.hzerr.configuration.database;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.configuration2.FileBasedConfiguration;
 import ru.hzerr.configuration.database.exception.FileSystemDatabaseAddProcessingException;
@@ -7,6 +8,8 @@ import ru.hzerr.configuration.database.exception.FileSystemDatabaseGetProcessing
 import ru.hzerr.configuration.database.exception.FileSystemDatabaseRemoveProcessingException;
 import ru.hzerr.configuration.database.exception.FileSystemDatabaseUpdateProcessingException;
 
+import java.lang.reflect.Array;
+import java.util.Iterator;
 import java.util.function.Consumer;
 
 public class JsonFileSystemDatabase<T> implements IFileSystemDatabase<T>, JsonDatabase {
@@ -37,6 +40,21 @@ public class JsonFileSystemDatabase<T> implements IFileSystemDatabase<T>, JsonDa
         } catch (Exception e) {
             throw new FileSystemDatabaseGetProcessingException(e);
         }
+    }
+
+    @Override
+    public T[] get(Class<T> type) {
+        Iterator<String> keyIterator = configuration.getKeys();
+        T[] values = (T[]) Array.newInstance(type, configuration.size());
+        for (int i = 0; keyIterator.hasNext(); i++) {
+            try {
+                values[i] = mapper.readValue(configuration.getString(keyIterator.next()), type);
+            } catch (JsonProcessingException e) {
+                throw new FileSystemDatabaseGetProcessingException(e);
+            }
+        }
+
+        return values;
     }
 
     @Override

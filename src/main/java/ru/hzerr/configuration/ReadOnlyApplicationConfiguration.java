@@ -12,7 +12,7 @@ public class ReadOnlyApplicationConfiguration implements IReadOnlyApplicationCon
     @NotNull
     @Override
     public Locale getLocale() {
-        return LOCALE_RU;
+        return Locale.ENGLISH;
     }
 
     @NotNull

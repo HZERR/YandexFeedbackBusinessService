@@ -1,3 +1,5 @@
 {
-
+  "createButtonText": "Создать",
+  "removeButtonText": "Удалить",
+  "changeSelectedButtonText": "Изменить"
 }

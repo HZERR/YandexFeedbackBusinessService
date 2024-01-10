@@ -4,9 +4,9 @@ import com.microsoft.playwright.*;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ListView;
 import ru.hzerr.configuration.database.repository.IEmailRepository;
-import ru.hzerr.fx.engine.core.annotation.ApplicationLogProvider;
 import ru.hzerr.fx.engine.core.annotation.Include;
 import ru.hzerr.fx.engine.core.annotation.Registered;
+import ru.hzerr.fx.engine.core.annotation.as.ApplicationLogProvider;
 import ru.hzerr.fx.engine.core.event.ActionEventProcessor;
 import ru.hzerr.fx.engine.logging.provider.ILogProvider;
 import ru.hzerr.generator.*;
@@ -76,6 +76,7 @@ public class CreateMailRuAccountEventProcessor extends ActionEventProcessor {
                                 throw new MailRuCreationInterruptedException(ie);
                             }
                         } while (isInvalidLogin(page));
+                        account.setLogin(STR."\{account.getLogin()}@mail.ru");
 
                         page.click("#root > div > div.-iGylzk8u50zKdna3C_sh > div:nth-child(4) > div > div > div > div > form > div._14NpOeQyQLsxKPw9X2JBIg > span > a");
                         page.click("#root > div > div.-iGylzk8u50zKdna3C_sh > div:nth-child(4) > div > div > div > div > form > div:nth-child(16) > span");

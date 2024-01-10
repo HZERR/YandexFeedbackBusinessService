@@ -1,7 +1,7 @@
 package ru.hzerr.configuration;
 
 import ru.hzerr.fx.engine.core.ApplicationContextInitializationException;
-import ru.hzerr.fx.engine.core.annotation.ApplicationLogProvider;
+import ru.hzerr.fx.engine.core.annotation.as.ApplicationLogProvider;
 import ru.hzerr.fx.engine.core.annotation.Include;
 import ru.hzerr.fx.engine.core.context.initializer.IExtendedAnnotationConfigApplicationContextInitializer;
 import ru.hzerr.fx.engine.logging.provider.ILogProvider;
@@ -23,7 +23,7 @@ public class ExtendedStructureConfigurationInitializer implements IExtendedAnnot
     public void onInitialize() {
         try {
             structureConfiguration.getDatabaseDirectory().create();
-            logProvider.getLogger().debug("Директория файлов баз данных иницилизирована");
+            logProvider.getLogger().debug("Директория файлов баз данных инициализирована");
         } catch (IOException e) {
             throw new ApplicationContextInitializationException("Database directory не создан", e);
         }

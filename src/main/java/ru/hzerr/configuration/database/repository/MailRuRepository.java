@@ -1,5 +1,6 @@
 package ru.hzerr.configuration.database.repository;
 
+import ru.hzerr.collections.list.HList;
 import ru.hzerr.configuration.database.JsonFileSystemDatabase;
 import ru.hzerr.fx.engine.core.annotation.Include;
 import ru.hzerr.fx.engine.core.annotation.Registered;
@@ -13,6 +14,11 @@ public class MailRuRepository implements IEmailRepository<MailRuAccount> {
     @Include
     public MailRuRepository(JsonFileSystemDatabase<MailRuAccount> database) {
         this.database = database;
+    }
+
+    @Override
+    public HList<MailRuAccount> getEmails() {
+        return HList.of(database.get(MailRuAccount.class));
     }
 
     @Override

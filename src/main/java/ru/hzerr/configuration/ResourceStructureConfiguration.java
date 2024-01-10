@@ -3,30 +3,31 @@ package ru.hzerr.configuration;
 import org.jetbrains.annotations.Nullable;
 import ru.hzerr.fx.engine.configuration.application.IResourceStructureConfiguration;
 import ru.hzerr.fx.engine.core.annotation.Registered;
-import ru.hzerr.fx.engine.core.path.BaseLocation;
+import ru.hzerr.fx.engine.core.path.ILocation;
+import ru.hzerr.fx.engine.core.path.RelativeDirectoryLocation;
 
 @Registered
 public class ResourceStructureConfiguration implements IResourceStructureConfiguration {
 
     @Override
-    public BaseLocation getFXMLPackage() {
-        return new BaseLocation("fxml");
+    public ILocation getFXMLPackage() {
+        return RelativeDirectoryLocation.of("fxml");
     }
 
     @Override
-    public BaseLocation getThemePackage() {
-        return new BaseLocation("theme");
-    }
-
-    @Nullable
-    @Override
-    public BaseLocation getApplicationInternationalizationPackage() {
-        return new BaseLocation("language");
+    public ILocation getThemePackage() {
+        return RelativeDirectoryLocation.of("theme");
     }
 
     @Nullable
     @Override
-    public BaseLocation getApplicationLoggingInternationalizationPackage() {
+    public ILocation getApplicationInternationalizationPackage() {
+        return RelativeDirectoryLocation.of("language");
+    }
+
+    @Nullable
+    @Override
+    public ILocation getApplicationLoggingInternationalizationPackage() {
         return null;
     }
 }
