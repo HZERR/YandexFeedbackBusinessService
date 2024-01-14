@@ -1,3 +1,5 @@
 {
-  "mailRuAccountMasterTabName": "Mail.Ru Account Master"
+  "mailRuAccountMasterTabText": "Mail.Ru Account Master",
+  "yandexManagerTabText": "Yandex Creator | Feedback Manager",
+  "applicationSettingsTabText": "Application Settings"
 }

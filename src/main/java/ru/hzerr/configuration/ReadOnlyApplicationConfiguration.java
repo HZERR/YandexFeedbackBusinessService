@@ -18,6 +18,6 @@ public class ReadOnlyApplicationConfiguration implements IReadOnlyApplicationCon
     @NotNull
     @Override
     public String getThemeName() {
-        return "White";
+        return "Asus";
     }
 }

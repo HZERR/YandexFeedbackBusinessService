@@ -1,0 +1,46 @@
+/*@import url(../../theme/fonts.css);*/
+
+.container {
+    -fx-background-image: url("../../images/YandexFeedbackBusinessMaster.jpg");
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 1200 802;
+}
+
+.tab {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+}
+
+.clickButton {
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-text-fill: rgba(0, 0, 0, 0.85);
+}
+
+.clickButton:hover {
+    -fx-background-color: rgb(143, 143, 143);
+    -fx-text-fill: rgba(0, 0, 0, 0.85);
+}
+
+.shape:pressed {
+    -fx-fill: rgb(143, 143, 143);
+    -fx-text-fill: rgba(0, 0, 0, 0.85);
+}
+
+.shape {
+    -fx-fill: #383434;
+    -fx-stroke: gray;
+    -fx-stroke-width: 3;
+}
+
+.pane {
+    -fx-border-width: 0 3 3 3;
+    -fx-border-color: gray;
+}
+
+.title {
+    -fx-font-family: "Source Code Pro";
+    -fx-font-size: 15px;
+    -fx-text-fill: white;
+}

@@ -5,16 +5,15 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="content" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1200.0" stylesheets="@../theme/white/mailRuAccountMaster.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="content" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="747.0" prefWidth="1200.0" styleClass="container" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ListView fx:id="accountsList" layoutX="20.0" layoutY="45.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="800.0" />
-      <AnchorPane fx:id="informationPane" layoutX="840.0" layoutY="30.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="330.0">
+      <ListView fx:id="accountsList" layoutX="20.0" layoutY="45.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="800.0" visible="false" />
+      <AnchorPane fx:id="informationPane" layoutX="840.0" layoutY="30.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="330.0" visible="false">
          <children>
             <HBox alignment="CENTER" layoutX="15.0" layoutY="15.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="300.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
                <children>
@@ -55,9 +54,6 @@
                      </padding>
                   </Label>
                   <ImageView fx:id="switchSexImageView" fitHeight="24.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" smooth="false">
-                     <image>
-                        <Image url="/images/icons8-change-480.png" />
-                     </image>
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin>
@@ -120,9 +116,6 @@
                      </padding>
                   </Label>
                   <ImageView fx:id="switchBlockedImageView" fitHeight="24.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" smooth="false">
-                     <image>
-                        <Image url="/images/icons8-change-480.png" />
-                     </image>
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin>
@@ -130,11 +123,11 @@
                </children>
             </HBox>
          </children></AnchorPane>
-      <Button fx:id="createAccountButton" layoutX="30.0" layoutY="686.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="360.0" text="Create">
+      <Button fx:id="createAccountButton" layoutX="30.0" layoutY="686.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="360.0" text="Create" visible="false">
          <font>
             <Font name="Corbel" size="16.0" />
          </font></Button>
-      <Button fx:id="changeSelectedAccount" layoutX="420.0" layoutY="686.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="360.0" text="Remove" />
-      <Button fx:id="removeAccountButton" layoutX="810.0" layoutY="686.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="360.0" text="Change" />
+      <Button fx:id="changeSelectedAccount" layoutX="420.0" layoutY="686.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="360.0" text="Remove" visible="false" />
+      <Button fx:id="removeAccountButton" layoutX="810.0" layoutY="686.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="360.0" text="Change" visible="false" />
    </children>
 </AnchorPane>

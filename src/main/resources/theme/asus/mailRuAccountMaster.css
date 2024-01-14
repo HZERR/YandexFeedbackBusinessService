@@ -1,0 +1,16 @@
+.container {
+    -fx-background-image: url("../../images/MailRuAccountCreator.png");
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 1200 747;
+}
+
+.label {
+    -fx-font-family: "Consolas";
+    -fx-font-size: 14px;
+}
+
+.button {
+    -fx-font-family: "Corbel";
+    -fx-font-size: 16px;
+}

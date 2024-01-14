@@ -1,13 +1,14 @@
 package ru.hzerr.controller;
 
-import javafx.fxml.FXMLLoader;
+import javafx.fxml.FXML;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.layout.AnchorPane;
 import ru.hzerr.fx.engine.core.FXEngine;
 import ru.hzerr.fx.engine.core.annotation.FXController;
 import ru.hzerr.fx.engine.core.annotation.FXEntity;
-import ru.hzerr.fx.engine.core.annotation.Registered;
 import ru.hzerr.fx.engine.core.annotation.as.ApplicationLogProvider;
 import ru.hzerr.fx.engine.core.entity.Controller;
 import ru.hzerr.fx.engine.core.entity.SpringLoadMetaData;
@@ -18,7 +19,10 @@ import ru.hzerr.fx.engine.logging.provider.ILogProvider;
 @FXEntity(fxml = "yandexFeedbackBusinessService.fxml", internationalization = "yandexFeedbackBusinessService.json", theme = "yandexFeedbackBusinessService.css")
 public class YandexFeedbackBusinessServiceController extends Controller {
 
-    private final Tab mailRuAccountManagerTab = new Tab();
+    @FXML
+    private AnchorPane content, tabContent;
+    @FXML
+    private Label creatorMailRuAccountTitleLabel, yandexAccountCreatorTitleLabel, settingsTitleLabel;
 
     private ILogProvider logProvider;
 
@@ -27,8 +31,7 @@ public class YandexFeedbackBusinessServiceController extends Controller {
         FXEngine.getContext().getEntityLoader().loadAsync(SpringLoadMetaData.from(MailRuAccountMasterController.class), Parent.class)
                 .thenFXAccept(mailRuAccountMasterControllerParentEntity -> {
                     logProvider.getLogger().debug("Добавление Mail.Ru Account Master Tab...");
-                    mailRuAccountManagerTab.setContent(mailRuAccountMasterControllerParentEntity.getNode());
-                    getContent(TabPane.class).getTabs().addFirst(mailRuAccountManagerTab);
+                    tabContent.getChildren().addFirst(mailRuAccountMasterControllerParentEntity.getNode());
                 }).exceptionallyAsync(t -> {
                     t.printStackTrace();
                     return null;
@@ -37,7 +40,9 @@ public class YandexFeedbackBusinessServiceController extends Controller {
 
     @Override
     public void onChangeLanguage(ILocalization localization) {
-        mailRuAccountManagerTab.setText(localization.getConfiguration().getString("mailRuAccountMasterTabName"));
+        creatorMailRuAccountTitleLabel.setText(localization.getConfiguration().getString("mailRuAccountMasterTabText"));
+        yandexAccountCreatorTitleLabel.setText(localization.getConfiguration().getString("yandexManagerTabText"));
+        settingsTitleLabel.setText(localization.getConfiguration().getString("applicationSettingsTabText"));
     }
 
     @Override

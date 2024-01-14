@@ -1,3 +1,5 @@
 {
-  "mailRuAccountMasterTabName": "Mail.Ru Аккаунт Мастер"
+  "mailRuAccountMasterTabText": "Менеджер Mail.Ru аккаунтов",
+  "yandexManagerTabText": "Яндекс менеджер | Мастер обратной связи",
+  "applicationSettingsTabText": "Настройки приложения"
 }
