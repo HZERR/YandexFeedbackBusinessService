@@ -7,12 +7,6 @@
     -fx-background-size: 1200 802;
 }
 
-.tab {
-    -fx-background-color: transparent;
-    -fx-background-insets: 0;
-    -fx-background-radius: 0;
-}
-
 .clickButton {
     -fx-background-color: rgb(255, 255, 255);
     -fx-text-fill: rgba(0, 0, 0, 0.85);
@@ -23,8 +17,12 @@
     -fx-text-fill: rgba(0, 0, 0, 0.85);
 }
 
+.shape:hover {
+    -fx-fill: rgb(79, 79, 79);
+}
+
 .shape:pressed {
-    -fx-fill: rgb(143, 143, 143);
+    -fx-fill: rgb(119, 119, 119);
     -fx-text-fill: rgba(0, 0, 0, 0.85);
 }
 

@@ -1,11 +1,15 @@
 package ru.hzerr.controller;
 
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.SVGPath;
+import javafx.scene.text.Font;
 import ru.hzerr.fx.engine.core.FXEngine;
 import ru.hzerr.fx.engine.core.annotation.FXController;
 import ru.hzerr.fx.engine.core.annotation.FXEntity;
@@ -14,6 +18,8 @@ import ru.hzerr.fx.engine.core.entity.Controller;
 import ru.hzerr.fx.engine.core.entity.SpringLoadMetaData;
 import ru.hzerr.fx.engine.core.language.ILocalization;
 import ru.hzerr.fx.engine.logging.provider.ILogProvider;
+
+import java.util.function.BiConsumer;
 
 @FXController
 @FXEntity(fxml = "yandexFeedbackBusinessService.fxml", internationalization = "yandexFeedbackBusinessService.json", theme = "yandexFeedbackBusinessService.css")

@@ -123,11 +123,11 @@
                </children>
             </HBox>
          </children></AnchorPane>
-      <Button fx:id="createAccountButton" layoutX="30.0" layoutY="686.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="360.0" text="Create" visible="false">
+      <Button fx:id="createAccountButton" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="35.0" layoutY="700.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="350.0" styleClass="create" text="Create">
          <font>
             <Font name="Corbel" size="16.0" />
          </font></Button>
-      <Button fx:id="changeSelectedAccount" layoutX="420.0" layoutY="686.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="360.0" text="Remove" visible="false" />
-      <Button fx:id="removeAccountButton" layoutX="810.0" layoutY="686.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="360.0" text="Change" visible="false" />
+      <Button fx:id="changeSelectedAccount" focusTraversable="false" layoutX="425.0" layoutY="700.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="350.0" styleClass="change" text="Change" />
+      <Button fx:id="removeAccountButton" focusTraversable="false" layoutX="815.0" layoutY="700.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="350.0" styleClass="remove" text="Remove" />
    </children>
 </AnchorPane>

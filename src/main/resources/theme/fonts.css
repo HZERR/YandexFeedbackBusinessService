@@ -17,3 +17,23 @@
 @font-face {
     src: url("../fonts/source-serif-pro/SourceSerifPro-Regular.ttf");
 }
+
+/*
+ * Edge Display
+ */
+@font-face {
+    src: url("../fonts/edge-display/EdgeDisplay-Regular.otf");
+}
+/*
+ * Monaspace Neon
+ */
+@font-face {
+    src: url("../fonts/monaspace/MonaspaceNeon-ExtraLight.otf");
+}
+
+/*
+ * Monaspace Neon
+ */
+@font-face {
+    src: url("../fonts/albert-sans/AlbertSans-Medium.ttf");
+}
