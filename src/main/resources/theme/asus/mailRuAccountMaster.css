@@ -5,18 +5,87 @@
     -fx-background-size: 1200 747;
 }
 
-.label {
-    -fx-font-family: "Consolas";
+.list-view {
+    -fx-background-color: transparent;
+    -fx-border-color: rgba(102, 102, 102, 0.3);
+    -fx-border-width: 3;
+    -fx-padding: 0px;
+}
+
+.list-cell {
+    -fx-background-color: rgba(31, 31, 31, 0.6);
+    -fx-background-insets: -2;
+    -fx-font-family: "Source Code Pro";
     -fx-font-size: 14px;
+    -fx-text-fill: rgba(102, 102, 102, 0.8);
+}
+
+.list-cell:hover {
+    -fx-background-color: rgba(23, 23, 23, 0.6);
+}
+
+.list-cell:pressed {
+    -fx-background-color: rgba(16, 16, 16, 0.6);
+}
+
+.grouping-data-first {
+    -fx-accent: rgba(59, 59, 59, 0.8);
+    -fx-border-width: 3 3 0 3;
+    -fx-background-color: rgba(31, 31, 31, 0.6);
+    -fx-border-color: rgba(102, 102, 102, 0.3);
+}
+
+.grouping-data-middle {
+    -fx-accent: rgba(59, 59, 59, 0.8);
+    -fx-border-width: 0 3 0 3;
+    -fx-background-color: rgba(31, 31, 31, 0.6);
+    -fx-border-color: rgba(102, 102, 102, 0.3);
+}
+
+.grouping-data-last {
+    -fx-accent: rgba(59, 59, 59, 0.8);
+    -fx-border-width: 0 3 3 3;
+    -fx-background-color: rgba(31, 31, 31, 0.6);
+    -fx-border-color: rgba(102, 102, 102, 0.3);
+}
+
+.data-title {
+    -fx-font-family: "Source Code Pro";
+    -fx-font-size: 14px;
+    -fx-text-fill: rgba(102, 102, 102, 0.8);
+}
+
+.text-field {
+    -fx-background-color: rgba(102, 102, 102, 0.1);
+    -fx-font-family: "Roboto Medium";
+    -fx-text-fill: rgba(79, 79, 79, 0.8);
+    -fx-font-size: 13px;
+}
+
+.reset-data-to-default {
+    -fx-background-color: rgba(102, 102, 102, 0.3);
+    -fx-font-family: "Montserrat Medium";
+    -fx-font-size: 13px;
+    -fx-padding: 0px;
+    -fx-text-fill: #f2ff37;
+}
+
+.reset-data-to-default:hover {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-scale-z: 1.1;
+}
+
+.reset-data-to-default:pressed {
+    -fx-background-color: rgba(51, 51, 51, 0.3);
 }
 
 .create,
 .remove,
 .change {
     -fx-background-color: rgba(102, 102, 102, 0.3);
-    /*-fx-background-color: transparent;*/
-    -fx-font-family: "Albert Sans Medium";
-    -fx-font-size: 14px;
+    -fx-font-family: "Montserrat Medium";
+    -fx-font-size: 16px;
     -fx-padding: 0px;
 }
 

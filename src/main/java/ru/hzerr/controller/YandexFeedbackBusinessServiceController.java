@@ -20,6 +20,7 @@ import ru.hzerr.fx.engine.core.language.ILocalization;
 import ru.hzerr.fx.engine.logging.provider.ILogProvider;
 
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 @FXController
 @FXEntity(fxml = "yandexFeedbackBusinessService.fxml", internationalization = "yandexFeedbackBusinessService.json", theme = "yandexFeedbackBusinessService.css")
@@ -35,13 +36,10 @@ public class YandexFeedbackBusinessServiceController extends Controller {
     @Override
     public void onInit() {
         FXEngine.getContext().getEntityLoader().loadAsync(SpringLoadMetaData.from(MailRuAccountMasterController.class), Parent.class)
-                .thenFXAccept(mailRuAccountMasterControllerParentEntity -> {
+                .thenFXAccept(entity -> {
                     logProvider.getLogger().debug("Добавление Mail.Ru Account Master Tab...");
-                    tabContent.getChildren().addFirst(mailRuAccountMasterControllerParentEntity.getNode());
-                }).exceptionallyAsync(t -> {
-                    t.printStackTrace();
-                    return null;
-                });
+                    tabContent.getChildren().addFirst(entity.getNode());
+                }).exceptionallyAsync((Consumer<Throwable>) Throwable::printStackTrace);
     }
 
     @Override

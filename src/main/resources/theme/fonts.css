@@ -32,8 +32,15 @@
 }
 
 /*
- * Monaspace Neon
+ *
  */
 @font-face {
     src: url("../fonts/albert-sans/AlbertSans-Medium.ttf");
+}
+
+/*
+ *
+ */
+@font-face {
+    src: url("../fonts/roboto/Roboto-Medium.ttf");
 }
