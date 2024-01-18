@@ -1,0 +1,141 @@
+@import url(../fonts.css);
+
+.container {
+    -fx-background-image: url("../../images/AsusContent.png");
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 1200 747;
+}
+
+.grouping-data-first {
+    -fx-accent: rgba(59, 59, 59, 0.8);
+    -fx-border-width: 3 3 0 3;
+    -fx-background-color: rgba(31, 31, 31, 0.6);
+    -fx-border-color: rgba(102, 102, 102, 0.3);
+}
+
+.grouping-data-middle {
+    -fx-accent: rgba(59, 59, 59, 0.8);
+    -fx-border-width: 0 3 0 3;
+    -fx-background-color: rgba(31, 31, 31, 0.6);
+    -fx-border-color: rgba(102, 102, 102, 0.3);
+}
+
+.grouping-data-last {
+    -fx-accent: rgba(59, 59, 59, 0.8);
+    -fx-border-width: 0 3 3 3;
+    -fx-background-color: rgba(31, 31, 31, 0.6);
+    -fx-border-color: rgba(102, 102, 102, 0.3);
+}
+
+.data-title {
+    -fx-font-family: "Source Code Pro";
+    -fx-font-size: 14px;
+    -fx-text-fill: rgba(102, 102, 102, 0.8);
+}
+
+.combo-box {
+    -fx-mark-color: rgba(102, 102, 102, 0.8);
+    -fx-background-color: rgba(102, 102, 102, 0.1);
+    -fx-border-color: rgba(102, 102, 102, 0.8);
+    -fx-border-width: 2;
+    -fx-font-family: "Roboto Medium";
+    -fx-text-fill: rgba(79, 79, 79, 0.8);
+    -fx-font-size: 13px;
+}
+
+.list-view {
+    -fx-background-color: transparent;
+    -fx-padding: 0px;
+    -fx-border-color: rgba(102, 102, 102, 0.8);
+    -fx-border-width: 0 1 1 1;
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: rgba(31, 31, 31);
+    -fx-background-insets: -1;
+}
+
+.combo-box .arrow {
+    -fx-background-color: rgba(102, 102, 102, 0.8);
+}
+
+.list-cell {
+    /*-fx-border-color: transparent;*/
+    -fx-background-color: rgba(31, 31, 31);
+    -fx-background-insets: -1;
+    -fx-font-family: "Source Code Pro";
+    -fx-font-size: 14px;
+    -fx-text-fill: rgba(102, 102, 102, 0.8);
+    -fx-padding: 5 5 5 10;
+}
+
+.combo-box .list-cell:selected {
+    -fx-padding: 5;
+}
+
+.list-cell:hover {
+    -fx-background-color: rgba(25, 25, 25);
+    -fx-padding: 5 5 5 15;
+}
+
+.list-cell:pressed {
+    -fx-background-color: rgba(20, 20, 20);
+}
+
+.scroll-bar:horizontal,
+.scroll-bar:vertical {
+    -fx-border-color: rgba(102, 102, 102, 0.8);
+    -fx-border-width: 1 1 1 0;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track {
+    -fx-background-color :rgba(31, 31, 31);
+    -fx-border-color :transparent;
+    -fx-background-radius : 0.0em;
+    -fx-border-radius :2.0em;
+}
+
+
+.scroll-bar:horizontal .increment-button ,
+.scroll-bar:horizontal .decrement-button {
+    -fx-background-color :transparent;
+    -fx-background-radius : 0.0em;
+    -fx-padding :0.0 0.0 10.0 0.0;
+
+}
+
+.scroll-bar:vertical .increment-button ,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color :transparent;
+    -fx-background-radius : 0.0em;
+    -fx-padding :0.0 10.0 0.0 0.0;
+
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-shape : " ";
+    -fx-padding :0.15em 0.0;
+}
+
+.scroll-bar:vertical .increment-arrow,
+.scroll-bar:vertical .decrement-arrow {
+    -fx-shape : " ";
+    -fx-padding :0.0 0.15em;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color :derive(black,90.0%);
+    -fx-background-insets : 2.0, 0.0, 0.0;
+    -fx-background-radius : 2.0em;
+}
+
+.scroll-bar:horizontal .thumb:hover,
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color :rgba(102, 102, 102, 0.8);
+    -fx-background-insets : 2.0, 0.0, 0.0;
+    -fx-background-radius : 2.0em;
+}

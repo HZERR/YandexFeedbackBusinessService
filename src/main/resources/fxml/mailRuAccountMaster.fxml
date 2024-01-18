@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import java.net.URL?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.text.Font?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane fx:id="content" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="747.0" prefWidth="1200.0" styleClass="container" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -33,7 +27,7 @@
                         <Font name="Monospaced Regular" size="12.0" />
                      </font>
                      <HBox.margin>
-                        <Insets right="5.0" />
+                        <Insets left="5.0" right="5.0" />
                      </HBox.margin></TextField>
                </children>
             </HBox>
@@ -49,7 +43,7 @@
                   </Label>
                   <TextField fx:id="lastNameTextField" alignment="TOP_LEFT" focusTraversable="false" prefWidth="150.0" text="Кустова" HBox.hgrow="ALWAYS">
                      <HBox.margin>
-                        <Insets right="5.0" />
+                        <Insets left="5.0" right="5.0" />
                      </HBox.margin></TextField>
                </children>
                <styleClass>
@@ -69,7 +63,7 @@
                   </Label>
                   <Label fx:id="sexText" focusTraversable="false" maxHeight="23.0" maxWidth="1.7976931348623157E308" text="женщина" HBox.hgrow="ALWAYS">
                      <HBox.margin>
-                        <Insets right="5.0" />
+                        <Insets left="5.0" right="5.0" />
                      </HBox.margin>
                      <padding>
                         <Insets left="10.0" />
@@ -108,7 +102,7 @@
                   </Label>
                   <TextField fx:id="loginTextField" alignment="TOP_LEFT" focusTraversable="false" maxHeight="23.0" prefWidth="150.0" text="efkwlw@mail.ru" HBox.hgrow="ALWAYS">
                      <HBox.margin>
-                        <Insets right="5.0" />
+                        <Insets left="5.0" right="5.0" />
                      </HBox.margin></TextField>
                </children>
                <styleClass>
@@ -128,7 +122,7 @@
                   </Label>
                   <TextField fx:id="passwordTextField" alignment="TOP_LEFT" focusTraversable="false" maxHeight="23.0" prefWidth="150.0" text="ufhwjkfhwjf" HBox.hgrow="ALWAYS">
                      <HBox.margin>
-                        <Insets right="5.0" />
+                        <Insets left="5.0" right="5.0" />
                      </HBox.margin></TextField>
                </children>
                <styleClass>
@@ -148,7 +142,7 @@
                   </Label>
                   <TextField fx:id="dateOfBirthTextField" alignment="TOP_LEFT" focusTraversable="false" maxHeight="23.0" prefWidth="150.0" text="01.01.2000" HBox.hgrow="ALWAYS">
                      <HBox.margin>
-                        <Insets right="5.0" />
+                        <Insets left="5.0" right="5.0" />
                      </HBox.margin></TextField>
                </children>
                <styleClass>
@@ -168,7 +162,7 @@
                   </Label>
                   <TextField fx:id="creationDateTextField" alignment="TOP_LEFT" focusTraversable="false" maxHeight="23.0" prefWidth="150.0" text="25.12.2023" HBox.hgrow="ALWAYS">
                      <HBox.margin>
-                        <Insets right="5.0" />
+                        <Insets left="5.0" right="5.0" />
                      </HBox.margin></TextField>
                </children>
                <styleClass>
@@ -188,7 +182,7 @@
                   </Label>
                   <Label fx:id="blockingText" focusTraversable="false" maxHeight="23.0" maxWidth="1.7976931348623157E308" text="нет" HBox.hgrow="ALWAYS">
                      <HBox.margin>
-                        <Insets right="5.0" />
+                        <Insets left="5.0" right="5.0" />
                      </HBox.margin>
                      <padding>
                         <Insets left="10.0" />
@@ -211,7 +205,12 @@
                   </ImageView>
                </children>
             </HBox>
-            <Button layoutX="14.0" layoutY="399.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="301.0" styleClass="reset-data-to-default" text="ПО-УМОЛЧАНИЮ">
+            <Button fx:id="resetToDefaultButton" layoutX="14.0" layoutY="399.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="301.0" styleClass="reset-data-to-default" text="ПО-УМОЛЧАНИЮ">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="checkDataButton" layoutX="14.0" layoutY="435.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="301.0" styleClass="check-data" text="ПРОВЕРИТЬ">
                <font>
                   <Font size="16.0" />
                </font>
@@ -226,8 +225,4 @@
       <Button fx:id="removeAccountButton" focusTraversable="false" layoutX="815.0" layoutY="685.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="350.0" styleClass="remove" text="УДАЛИТЬ" />
       <ListView fx:id="accountsList" layoutX="35.0" layoutY="27.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="775.0" />
    </children>
-   <stylesheets>
-      <URL value="@../theme/asus/yandexFeedbackBusinessService.css" />
-      <URL value="@../theme/asus/mailRuAccountMaster.css" />
-   </stylesheets>
 </AnchorPane>

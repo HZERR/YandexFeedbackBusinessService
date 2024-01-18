@@ -20,7 +20,7 @@ import ru.hzerr.model.MailRuAccount;
 import java.time.format.DateTimeFormatter;
 
 @FXController
-@FXEntity(fxml = "mailRuAccountMaster.fxml", internationalization = "mailRuAccountMaster.json", theme = "mailRuAccountMaster.css")
+@FXEntity(fxml = "mailRuAccountMaster.fxml", internationalization = "managerMailRu.json", theme = "managerMailRu.css")
 public class MailRuAccountMasterController extends MailRuAccountMasterControllerTemplate {
 
     private CreateMailRuAccountEventProcessor createMailRuAccountEventProcessor;

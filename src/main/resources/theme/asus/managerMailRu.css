@@ -1,5 +1,5 @@
 .container {
-    -fx-background-image: url("../../images/MailRuAccountCreator.png");
+    -fx-background-image: url("../../images/AsusContent.png");
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
     -fx-background-size: 1200 747;
@@ -62,22 +62,20 @@
     -fx-font-size: 13px;
 }
 
+.check-data {
+    -fx-background-color: rgba(102, 102, 102, 0.3);
+    -fx-font-family: "Montserrat Medium";
+    -fx-font-size: 13px;
+    -fx-padding: 0px;
+    -fx-text-fill: #00ff00;
+}
+
 .reset-data-to-default {
     -fx-background-color: rgba(102, 102, 102, 0.3);
     -fx-font-family: "Montserrat Medium";
     -fx-font-size: 13px;
     -fx-padding: 0px;
     -fx-text-fill: #f2ff37;
-}
-
-.reset-data-to-default:hover {
-    -fx-scale-x: 1.1;
-    -fx-scale-y: 1.1;
-    -fx-scale-z: 1.1;
-}
-
-.reset-data-to-default:pressed {
-    -fx-background-color: rgba(51, 51, 51, 0.3);
 }
 
 .create,
@@ -91,7 +89,9 @@
 
 .create:hover,
 .remove:hover,
-.change:hover {
+.change:hover,
+.reset-data-to-default:hover,
+.check-data:hover {
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
     -fx-scale-z: 1.1;
@@ -99,7 +99,9 @@
 
 .create:pressed,
 .remove:pressed,
-.change:pressed {
+.change:pressed,
+.reset-data-to-default:pressed,
+.check-data:pressed {
     -fx-background-color: rgba(51, 51, 51, 0.3);
 }
 
