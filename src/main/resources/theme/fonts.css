@@ -32,14 +32,7 @@
 }
 
 /*
- *
- */
-@font-face {
-    src: url("../fonts/albert-sans/AlbertSans-Medium.ttf");
-}
-
-/*
- *
+ * Roboto Medium
  */
 @font-face {
     src: url("../fonts/roboto/Roboto-Medium.ttf");

@@ -18,10 +18,12 @@
     -fx-font-family: "Source Code Pro";
     -fx-font-size: 14px;
     -fx-text-fill: rgba(102, 102, 102, 0.8);
+    -fx-padding: 5 5 5 5;
 }
 
 .list-cell:hover {
     -fx-background-color: rgba(23, 23, 23, 0.6);
+    -fx-padding: 5 5 5 10;
 }
 
 .list-cell:pressed {
@@ -60,6 +62,7 @@
     -fx-font-family: "Roboto Medium";
     -fx-text-fill: rgba(79, 79, 79, 0.8);
     -fx-font-size: 13px;
+    -fx-background-radius: 3px;
 }
 
 .check-data {

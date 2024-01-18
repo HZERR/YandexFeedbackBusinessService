@@ -61,17 +61,13 @@
                         <Insets left="5.0" />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="sexText" focusTraversable="false" maxHeight="23.0" maxWidth="1.7976931348623157E308" text="женщина" HBox.hgrow="ALWAYS">
+                  <Label fx:id="sexText" focusTraversable="false" maxHeight="23.0" maxWidth="1.7976931348623157E308" styleClass="text-field" text="женщина" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets left="5.0" right="5.0" />
                      </HBox.margin>
                      <padding>
                         <Insets left="10.0" />
                      </padding>
-                     <styleClass>
-                        <String fx:value="changeable-label" />
-                        <String fx:value="text-field" />
-                     </styleClass>
                   </Label>
                   <ImageView fx:id="switchSexImageView" fitHeight="24.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" smooth="false">
                      <HBox.margin>
@@ -180,17 +176,13 @@
                         <Insets left="5.0" />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="blockingText" focusTraversable="false" maxHeight="23.0" maxWidth="1.7976931348623157E308" text="нет" HBox.hgrow="ALWAYS">
+                  <Label fx:id="blockingText" focusTraversable="false" maxHeight="23.0" maxWidth="1.7976931348623157E308" styleClass="text-field" text="нет" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets left="5.0" right="5.0" />
                      </HBox.margin>
                      <padding>
                         <Insets left="10.0" />
                      </padding>
-                     <styleClass>
-                        <String fx:value="changeable-label" />
-                        <String fx:value="text-field" />
-                     </styleClass>
                   </Label>
                   <ImageView fx:id="switchBlockedImageView" fitHeight="24.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" smooth="false">
                      <HBox.margin>
