@@ -56,12 +56,12 @@ public class YandexFeedbackBusinessServiceController extends Controller {
         FXEngine.getContext().getEntityLoader().loadAsync(SpringLoadMetaData.from(MailRuAccountMasterController.class), Parent.class)
                 .thenFXAccept(entity -> {
                     managerMailRuEntity = entity;
-                    getLogProvider().getLogger().debug("Добавление 'Mail.Ru менеджер' вкладки...");
+                    getLogProvider().getLogger().debug("Добавление вкладки 'Mail.Ru менеджер'");
                     tabContent.getChildren().addFirst(entity.getNode());
                 }).exceptionallyAsync((Consumer<Throwable>) Throwable::printStackTrace);
         FXEngine.getContext().getEntityLoader().loadAsync(SpringLoadMetaData.from(AppSettingsController.class), Parent.class)
                 .thenFXAccept(entity -> {
-                    getLogProvider().getLogger().debug("Добавление 'Настройки приложения' вкладки...");
+                    getLogProvider().getLogger().debug("Добавление вкладки 'Настройки приложения'");
                     appSettingsEntity = entity;
                 }).exceptionallyAsync((Consumer<Throwable>) Throwable::printStackTrace);
     }
@@ -71,6 +71,13 @@ public class YandexFeedbackBusinessServiceController extends Controller {
         managerMailRuTitleLabel.setText(localization.getConfiguration().getString("mailRuAccountMasterTabText"));
         managerYandexTitleLabel.setText(localization.getConfiguration().getString("yandexManagerTabText"));
         appSettingsTitleLabel.setText(localization.getConfiguration().getString("applicationSettingsTabText"));
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        managerMailRuEntity.getController().onDestroy();
+        appSettingsEntity.getController().onDestroy();
     }
 
     @Override

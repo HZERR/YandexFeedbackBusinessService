@@ -7,7 +7,7 @@ import ru.hzerr.configuration.database.repository.IEmailRepository;
 import ru.hzerr.fx.engine.core.annotation.Include;
 import ru.hzerr.fx.engine.core.annotation.Registered;
 import ru.hzerr.fx.engine.core.annotation.as.ApplicationLogProvider;
-import ru.hzerr.fx.engine.core.event.ActionEventProcessor;
+import ru.hzerr.fx.engine.core.javafx.event.ActionEventProcessor;
 import ru.hzerr.fx.engine.logging.provider.ILogProvider;
 import ru.hzerr.generator.*;
 import ru.hzerr.model.Gender;
@@ -23,7 +23,6 @@ public class CreateMailRuAccountEventProcessor extends ActionEventProcessor {
     private final ILoginGenerator loginGenerator = new RandomAlphanumericLoginGenerator(LOGIN_CHARACTER_LENGTH);
     private RandomDataToolsGenerator randomDataGenerator;
     private final IEmailRepository<MailRuAccount> repository;
-    private ILogProvider logProvider;
 
     private static final String BACKUP_EMAIL_ADDRESS = "vadimvyazloy@yandex.ru";
 
@@ -36,7 +35,7 @@ public class CreateMailRuAccountEventProcessor extends ActionEventProcessor {
 
     @Override
     protected void onProcess(ActionEvent actionEvent) throws Exception {
-        logProvider.getLogger().debug("Генерируем данные...");
+        getLogProvider().getLogger().debug("Генерируем данные...");
         GenerationResult generationResult = randomDataGenerator
                 .addFirstName()
                 .addLastName()
@@ -44,12 +43,12 @@ public class CreateMailRuAccountEventProcessor extends ActionEventProcessor {
                 .addGender()
                 .generate();
 
-        logProvider.getLogger().debug("Запускаем браузер...");
+        getLogProvider().getLogger().debug("Запускаем браузер...");
         try (Playwright playwright = Playwright.create()) {
             try (Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false))) {
                 try (BrowserContext context = browser.newContext()) {
                     try (Page page = context.newPage()) {
-                        logProvider.getLogger().debug("Заполняем форму...");
+                        getLogProvider().getLogger().debug("Заполняем форму...");
                         MailRuAccount account = mailRuAccountConverter.convert(generationResult);
                         page.navigate("https://account.mail.ru/signup");
                         page.fill("#fname", account.getFirstName());
@@ -92,9 +91,9 @@ public class CreateMailRuAccountEventProcessor extends ActionEventProcessor {
                         page.click("#root > div > div.-iGylzk8u50zKdna3C_sh > div:nth-child(4) > div > div > div > div > form > button");
                         account.setCreated(true);
                         account.setCreatedDate(LocalDateTime.now());
-                        logProvider.getLogger().debug(STR."Аккаунт \{account.getLogin()} успешно создан");
+                        getLogProvider().getLogger().debug(STR."Аккаунт \{account.getLogin()} успешно создан");
                         repository.addEmail(account);
-                        logProvider.getLogger().debug(STR."Аккаунт \{account.getLogin()} успешно зарегистрирован в базе данных");
+                        getLogProvider().getLogger().debug(STR."Аккаунт \{account.getLogin()} успешно зарегистрирован в базе данных");
                         accounts.getItems().add(account);
                     }
                 }
@@ -109,12 +108,7 @@ public class CreateMailRuAccountEventProcessor extends ActionEventProcessor {
 
     @Override
     protected void onFailure(Exception e) {
-        logProvider.getLogger().error("CreateMailRuAccountEventProcessor", e);
-    }
-
-    @ApplicationLogProvider
-    public void setLogProvider(ILogProvider logProvider) {
-        this.logProvider = logProvider;
+        getLogProvider().getLogger().error("CreateMailRuAccountEventProcessor", e);
     }
 
     @Include

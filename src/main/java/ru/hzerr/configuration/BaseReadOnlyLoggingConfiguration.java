@@ -16,6 +16,11 @@ public class BaseReadOnlyLoggingConfiguration extends ReadOnlyLoggingConfigurati
 
     @Override
     public boolean isEngineLoggingEnabled() {
-        return false;
+        return true;
+    }
+
+    @Override
+    public Level getLoggerLevel() {
+        return Level.DEBUG;
     }
 }

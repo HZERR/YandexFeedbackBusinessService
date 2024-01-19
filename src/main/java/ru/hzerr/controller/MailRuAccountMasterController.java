@@ -13,7 +13,8 @@ import ru.hzerr.controller.user.data.Sex;
 import ru.hzerr.fx.engine.core.annotation.FXController;
 import ru.hzerr.fx.engine.core.annotation.FXEntity;
 import ru.hzerr.fx.engine.core.annotation.Include;
-import ru.hzerr.fx.engine.core.annotation.Registered;
+import ru.hzerr.fx.engine.core.javafx.list.BasicCellFactory;
+import ru.hzerr.fx.engine.core.javafx.list.BasicListCell;
 import ru.hzerr.fx.engine.core.language.ILocalization;
 import ru.hzerr.model.MailRuAccount;
 
@@ -32,14 +33,12 @@ public class MailRuAccountMasterController extends MailRuAccountMasterController
         sexText.setUserData(Sex.NONE);
         createMailRuAccountEventProcessor.setAccounts(accountsList);
         createAccountButton.setOnAction(createMailRuAccountEventProcessor);
-        accountsList.setCellFactory(new Callback<>() {
+        accountsList.setCellFactory(new BasicCellFactory<>() {
             @Override
-            public ListCell<MailRuAccount> call(ListView<MailRuAccount> param) {
-                return new ListCell<>() {
+            public BasicListCell<MailRuAccount> createListCell() {
+                return new BasicListCell<>() {
                     @Override
-                    protected void updateItem(MailRuAccount item, boolean empty) {
-                        super.updateItem(item, empty);
-
+                    public void onUpdateItem(MailRuAccount item, boolean empty) {
                         if (!empty) {
                             setText(item.getLogin());
                         }
@@ -49,34 +48,39 @@ public class MailRuAccountMasterController extends MailRuAccountMasterController
         });
         accountsList.setItems(FXCollections.observableList(repository.getEmails()));
         accountsList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        accountsList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            firstNameTextField.setText(newValue.getFirstName());
-            lastNameTextField.setText(newValue.getLastName());
-            loginTextField.setText(newValue.getLogin());
-            passwordTextField.setText(newValue.getPassword());
-            dateOfBirthTextField.setText(newValue.getDateOfBirth());
-            creationDateTextField.setText(newValue.getCreatedDate().format(DateTimeFormatter.ISO_DATE));
-//            if (newValue.getGender() == Gender.MALE) {
+        accountsList.getSelectionModel().selectedItemProperty().subscribe((oValue, nValue) -> {
+            firstNameTextField.setText(nValue.getFirstName());
+            lastNameTextField.setText(nValue.getLastName());
+            loginTextField.setText(nValue.getLogin());
+            passwordTextField.setText(nValue.getPassword());
+            dateOfBirthTextField.setText(nValue.getDateOfBirth());
+            creationDateTextField.setText(nValue.getCreatedDate().format(DateTimeFormatter.ISO_DATE));
+//            if (nValue.getGender() == Gender.MALE) {
 //                sexText.setUserData(Sex.MALE);
 //                sexText.setText();
 //            } else {
 //                sexToggleButton.setText("женщина");
 //                sexToggleButton.setSelected(false);
 //            }
-//            blockedToggleButton.setSelected(newValue.isBlocked());
+//            blockedToggleButton.setSelected(nValue.isBlocked());
         });
     }
 
     @Override
     public void onChangeLanguage(ILocalization localization) {
+        getLogProvider().getLogger().debug("Изменение локализации...");
         createAccountButton.setText(localization.getConfiguration().getString("createButtonText"));
         removeAccountButton.setText(localization.getConfiguration().getString("removeButtonText"));
         changeSelectedAccount.setText(localization.getConfiguration().getString("changeSelectedButtonText"));
     }
 
     @Override
+    protected void onConnectDestroyEvent() {
+    }
+
+    @Override
     protected String id() {
-        return null;
+        return "managerMailRu";
     }
 
     @Include
