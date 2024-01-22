@@ -15,9 +15,11 @@ public class YandexFeedbackBusinessService extends FXEngine {
     protected IExtendedAnnotationConfigApplicationContext createApplicationContext() {
         return createAutomaticExtendedAnnotationConfigApplicationContextProvider(YandexFeedbackBusinessService.class).getContext();
     }
-
     @Override
     protected Scene onStart(Stage stage) throws Exception {
+        stage.setResizable(false);
+        stage.requestFocus();
+
         Entity<YandexFeedbackBusinessServiceController, Parent> entity = context.getEntityLoader()
                 .load(SpringLoadMetaData.from(YandexFeedbackBusinessServiceController.class), Parent.class);
 

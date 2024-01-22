@@ -52,7 +52,7 @@
 }
 
 .combo-box .arrow-button {
-    -fx-background-color: rgba(31, 31, 31);
+    -fx-background-color: rgba(18, 18, 18);
     -fx-background-insets: -1;
 }
 
@@ -71,6 +71,7 @@
 }
 
 .combo-box .list-cell:selected {
+    -fx-background-color: rgba(18, 18, 18);
     -fx-padding: 5;
 }
 

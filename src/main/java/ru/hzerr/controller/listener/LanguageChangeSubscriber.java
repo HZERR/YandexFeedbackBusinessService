@@ -1,10 +1,12 @@
 package ru.hzerr.controller.listener;
 
+import javafx.scene.control.ComboBox;
 import ru.hzerr.fx.engine.core.annotation.Include;
 import ru.hzerr.fx.engine.core.annotation.Registered;
 import ru.hzerr.fx.engine.core.entity.IApplicationManager;
 import ru.hzerr.fx.engine.core.javafx.subscriber.ChangeSubscriber;
 
+import java.text.Collator;
 import java.util.Locale;
 
 @Registered
@@ -21,7 +23,7 @@ public class LanguageChangeSubscriber extends ChangeSubscriber<Locale, Locale> {
     }
 
     private boolean nonEquals(Locale oLocale, Locale nLocale) {
-        return !oLocale.equals(nLocale);
+        return !nLocale.equals(oLocale);
     }
 
     @Include

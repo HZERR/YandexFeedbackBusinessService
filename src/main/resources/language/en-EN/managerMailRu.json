@@ -10,6 +10,10 @@
   "passwordFilledText": "Password:",
   "loginFilledText": "Login:",
   "sexFilledText": "Sex:",
-  "firstNameFilledText": "Name:",
-  "lastNameFilledText": "Surname:"
+  "firstNameFilledText": "First name:",
+  "lastNameFilledText": "Last name:",
+  "sexMale": "Male",
+  "sexFemale": "Female",
+  "blockingYes": "Yes",
+  "blockingNo": "No"
 }

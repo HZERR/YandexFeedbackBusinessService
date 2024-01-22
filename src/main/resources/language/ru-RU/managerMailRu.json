@@ -11,5 +11,9 @@
   "loginFilledText": "Логин:",
   "sexFilledText": "Пол:",
   "firstNameFilledText": "Имя:",
-  "lastNameFilledText": "Фамилия:"
+  "lastNameFilledText": "Фамилия:",
+  "sexMale": "Мужчина",
+  "sexFemale": "Женщина",
+  "blockingYes": "Да",
+  "blockingNo": "Нет"
 }

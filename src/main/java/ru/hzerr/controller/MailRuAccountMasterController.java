@@ -7,8 +7,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import ru.hzerr.configuration.database.repository.IEmailRepository;
 import ru.hzerr.controller.processor.CreateMailRuAccountEventProcessor;
-import ru.hzerr.controller.user.data.Block;
-import ru.hzerr.controller.user.data.Sex;
 import ru.hzerr.fx.engine.core.annotation.FXController;
 import ru.hzerr.fx.engine.core.annotation.FXEntity;
 import ru.hzerr.fx.engine.core.annotation.Include;
@@ -16,6 +14,7 @@ import ru.hzerr.fx.engine.core.entity.Controller;
 import ru.hzerr.fx.engine.core.javafx.list.BasicCellFactory;
 import ru.hzerr.fx.engine.core.javafx.list.BasicListCell;
 import ru.hzerr.fx.engine.core.language.ILocalization;
+import ru.hzerr.model.Gender;
 import ru.hzerr.model.MailRuAccount;
 
 import java.time.format.DateTimeFormatter;
@@ -43,8 +42,6 @@ public class MailRuAccountMasterController extends Controller {
 
     @Override
     protected void onInit() {
-        blockingText.setUserData(Block.NONE);
-        sexText.setUserData(Sex.NONE);
         createMailRuAccountEventProcessor.setAccounts(accountsList);
         createAccountButton.setOnAction(createMailRuAccountEventProcessor);
         accountsList.setCellFactory(new BasicCellFactory<>() {
@@ -69,15 +66,17 @@ public class MailRuAccountMasterController extends Controller {
             passwordTextField.setText(nValue.getPassword());
             dateOfBirthTextField.setText(nValue.getDateOfBirth());
             creationDateTextField.setText(nValue.getCreatedDate().format(DateTimeFormatter.ISO_DATE));
-//            if (nValue.getGender() == Gender.MALE) {
-//                sexText.setUserData(Sex.MALE);
-//                sexText.setText();
-//            } else {
-//                sexToggleButton.setText("женщина");
-//                sexToggleButton.setSelected(false);
-//            }
-//            blockedToggleButton.setSelected(nValue.isBlocked());
+            if (nValue.getGender() == Gender.MALE) {
+                sexText.setText(getLocalizationProvider().getLocalization().getConfiguration().getString("sexMale"));
+            } else
+                sexText.setText(getLocalizationProvider().getLocalization().getConfiguration().getString("sexFemale"));
+
+            if (nValue.isBlocked()) {
+                blockingText.setText(getLocalizationProvider().getLocalization().getConfiguration().getString("blockingYes"));
+            } else
+                blockingText.setText(getLocalizationProvider().getLocalization().getConfiguration().getString("blockingNo"));
         });
+        accountsList.getSelectionModel().selectFirst();
     }
 
     @Override
@@ -95,6 +94,17 @@ public class MailRuAccountMasterController extends Controller {
         loginFilledText.setText(localization.getConfiguration().getString("loginFilledText"));
         passwordFilledText.setText(localization.getConfiguration().getString("passwordFilledText"));
         sexFilledText.setText(localization.getConfiguration().getString("sexFilledText"));
+        if (selectedItemExists()) {
+            if (accountsList.getSelectionModel().getSelectedItem().getGender() == Gender.MALE) {
+                sexText.setText(localization.getConfiguration().getString("sexMale"));
+            } else
+                sexText.setText(localization.getConfiguration().getString("sexFemale"));
+
+            if (accountsList.getSelectionModel().getSelectedItem().isBlocked()) {
+                blockingText.setText(localization.getConfiguration().getString("blockingYes"));
+            } else
+                blockingText.setText(localization.getConfiguration().getString("blockingNo"));
+        }
     }
 
     @Override
@@ -104,6 +114,10 @@ public class MailRuAccountMasterController extends Controller {
     @Override
     protected String id() {
         return "managerMailRu";
+    }
+
+    private boolean selectedItemExists() {
+        return !accountsList.getSelectionModel().isEmpty();
     }
 
     @Include

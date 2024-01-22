@@ -9,7 +9,6 @@ import ru.hzerr.fx.engine.core.annotation.FXController;
 import ru.hzerr.fx.engine.core.annotation.FXEntity;
 import ru.hzerr.fx.engine.core.annotation.Include;
 import ru.hzerr.fx.engine.core.entity.Controller;
-import ru.hzerr.fx.engine.core.entity.IApplicationManager;
 import ru.hzerr.fx.engine.core.language.ILocalization;
 import ru.hzerr.fx.engine.core.theme.ThemeMetaData;
 
