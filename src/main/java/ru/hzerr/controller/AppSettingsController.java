@@ -4,10 +4,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import ru.hzerr.controller.converter.LocaleToStringConverter;
 import ru.hzerr.controller.listener.LanguageChangeSubscriber;
+import ru.hzerr.fx.engine.configuration.application.IApplicationConfiguration;
 import ru.hzerr.fx.engine.core.annotation.FXController;
 import ru.hzerr.fx.engine.core.annotation.FXEntity;
 import ru.hzerr.fx.engine.core.annotation.Include;
 import ru.hzerr.fx.engine.core.entity.Controller;
+import ru.hzerr.fx.engine.core.entity.IApplicationManager;
 import ru.hzerr.fx.engine.core.language.ILocalization;
 import ru.hzerr.fx.engine.core.theme.ThemeMetaData;
 
@@ -23,12 +25,14 @@ public class AppSettingsController extends Controller {
     private ComboBox<Class<? extends ThemeMetaData>> themeComboBox;
 
     private LanguageChangeSubscriber languageChangeSubscriber;
+    private Locale LOCALE_RU = Locale.of("ru", "RU");
+    private IApplicationConfiguration applicationConfiguration;
 
     @Override
     protected void onInit() {
-        languageComboBox.getItems().addAll(Locale.of("ru", "RU"), Locale.ENGLISH);
+        languageComboBox.getItems().addAll(LOCALE_RU, Locale.ENGLISH);
         languageComboBox.setConverter(new LocaleToStringConverter());
-        languageComboBox.getSelectionModel().select(Locale.of("ru", "RU"));
+        languageComboBox.getSelectionModel().select(applicationConfiguration.getLocale());
         languageComboBox.getSelectionModel().selectedItemProperty().subscribe(languageChangeSubscriber);
     }
 
@@ -44,6 +48,11 @@ public class AppSettingsController extends Controller {
     @Override
     protected String id() {
         return "appSettings";
+    }
+
+    @Include
+    public void setApplicationConfiguration(IApplicationConfiguration applicationConfiguration) {
+        this.applicationConfiguration = applicationConfiguration;
     }
 
     @Include

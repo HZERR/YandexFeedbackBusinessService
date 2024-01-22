@@ -1,18 +1,18 @@
 package ru.hzerr.controller;
 
 import javafx.collections.FXCollections;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
-import javafx.util.Callback;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import ru.hzerr.configuration.database.repository.IEmailRepository;
 import ru.hzerr.controller.processor.CreateMailRuAccountEventProcessor;
-import ru.hzerr.controller.template.MailRuAccountMasterControllerTemplate;
 import ru.hzerr.controller.user.data.Block;
 import ru.hzerr.controller.user.data.Sex;
 import ru.hzerr.fx.engine.core.annotation.FXController;
 import ru.hzerr.fx.engine.core.annotation.FXEntity;
 import ru.hzerr.fx.engine.core.annotation.Include;
+import ru.hzerr.fx.engine.core.entity.Controller;
 import ru.hzerr.fx.engine.core.javafx.list.BasicCellFactory;
 import ru.hzerr.fx.engine.core.javafx.list.BasicListCell;
 import ru.hzerr.fx.engine.core.language.ILocalization;
@@ -22,7 +22,21 @@ import java.time.format.DateTimeFormatter;
 
 @FXController
 @FXEntity(fxml = "mailRuAccountMaster.fxml", internationalization = "managerMailRu.json", theme = "managerMailRu.css")
-public class MailRuAccountMasterController extends MailRuAccountMasterControllerTemplate {
+public class MailRuAccountMasterController extends Controller {
+
+    @FXML private AnchorPane informationPane;
+    @FXML private ListView<MailRuAccount> accountsList;
+
+    @FXML
+    private Label blockedFilledText, creationDateFilledText, dateOfBirthFilledText, firstNameFilledText, lastNameFilledText, loginFilledText, passwordFilledText, sexFilledText;
+    @FXML
+    private TextField creationDateTextField, dateOfBirthTextField, firstNameTextField, lastNameTextField, loginTextField, passwordTextField;
+    @FXML
+    private Label blockingText, sexText;
+    @FXML
+    private Button changeSelectedAccountButton, checkDataButton, createAccountButton, removeAccountButton, resetToDefaultButton;
+    @FXML
+    private ImageView switchBlockedImageView, switchSexImageView;
 
     private CreateMailRuAccountEventProcessor createMailRuAccountEventProcessor;
     private IEmailRepository<MailRuAccount> repository;
@@ -68,10 +82,19 @@ public class MailRuAccountMasterController extends MailRuAccountMasterController
 
     @Override
     public void onChangeLanguage(ILocalization localization) {
-        getLogProvider().getLogger().debug("Изменение локализации...");
-        createAccountButton.setText(localization.getConfiguration().getString("createButtonText"));
-        removeAccountButton.setText(localization.getConfiguration().getString("removeButtonText"));
-        changeSelectedAccount.setText(localization.getConfiguration().getString("changeSelectedButtonText"));
+        createAccountButton.setText(localization.getConfiguration().getString("createAccountButtonText"));
+        removeAccountButton.setText(localization.getConfiguration().getString("removeAccountButtonText"));
+        changeSelectedAccountButton.setText(localization.getConfiguration().getString("changeSelectedAccountButtonText"));
+        resetToDefaultButton.setText(localization.getConfiguration().getString("resetToDefaultButtonText"));
+        checkDataButton.setText(localization.getConfiguration().getString("checkDataButtonText"));
+        blockedFilledText.setText(localization.getConfiguration().getString("blockingFilledText"));
+        creationDateFilledText.setText(localization.getConfiguration().getString("creationDateFilledText"));
+        dateOfBirthFilledText.setText(localization.getConfiguration().getString("dateOfBirthFilledText"));
+        firstNameFilledText.setText(localization.getConfiguration().getString("firstNameFilledText"));
+        lastNameFilledText.setText(localization.getConfiguration().getString("lastNameFilledText"));
+        loginFilledText.setText(localization.getConfiguration().getString("loginFilledText"));
+        passwordFilledText.setText(localization.getConfiguration().getString("passwordFilledText"));
+        sexFilledText.setText(localization.getConfiguration().getString("sexFilledText"));
     }
 
     @Override

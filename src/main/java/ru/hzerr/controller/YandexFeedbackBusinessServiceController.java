@@ -1,24 +1,17 @@
 package ru.hzerr.controller;
 
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.SVGPath;
 import ru.hzerr.fx.engine.core.FXEngine;
 import ru.hzerr.fx.engine.core.annotation.FXController;
 import ru.hzerr.fx.engine.core.annotation.FXEntity;
-import ru.hzerr.fx.engine.core.annotation.as.ApplicationLogProvider;
 import ru.hzerr.fx.engine.core.entity.Controller;
 import ru.hzerr.fx.engine.core.entity.Entity;
 import ru.hzerr.fx.engine.core.entity.SpringLoadMetaData;
 import ru.hzerr.fx.engine.core.language.ILocalization;
-import ru.hzerr.fx.engine.logging.provider.ILogProvider;
 
 import java.util.function.Consumer;
 
@@ -74,10 +67,14 @@ public class YandexFeedbackBusinessServiceController extends Controller {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        managerMailRuEntity.getController().onDestroy();
-        appSettingsEntity.getController().onDestroy();
+    protected void onConnectDestroyEvent() {
+        this.content.sceneProperty().addListener((_, _, newValue) -> {
+            if (newValue == null) {
+                onDestroy();
+                managerMailRuEntity.getController().onDestroy();
+                appSettingsEntity.getController().onDestroy();
+            }
+        });
     }
 
     @Override

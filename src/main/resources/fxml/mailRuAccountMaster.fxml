@@ -22,7 +22,7 @@
                         <Insets left="5.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="firstNameTextField" alignment="TOP_LEFT" focusTraversable="false" prefWidth="150.0" text="Вероника" HBox.hgrow="ALWAYS">
+                  <TextField fx:id="firstNameTextField" alignment="TOP_LEFT" focusTraversable="false" text="Вероника" HBox.hgrow="ALWAYS">
                      <font>
                         <Font name="Monospaced Regular" size="12.0" />
                      </font>
@@ -41,7 +41,7 @@
                         <Insets left="5.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="lastNameTextField" alignment="TOP_LEFT" focusTraversable="false" prefWidth="150.0" text="Кустова" HBox.hgrow="ALWAYS">
+                  <TextField fx:id="lastNameTextField" alignment="TOP_LEFT" focusTraversable="false" text="Кустова" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets left="5.0" right="5.0" />
                      </HBox.margin></TextField>
@@ -61,7 +61,7 @@
                         <Insets left="5.0" />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="sexText" focusTraversable="false" maxHeight="23.0" maxWidth="1.7976931348623157E308" styleClass="text-field" text="женщина" HBox.hgrow="ALWAYS">
+                  <Label fx:id="sexText" focusTraversable="false" maxHeight="25.0" maxWidth="1.7976931348623157E308" styleClass="text-field" text="женщина" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets left="5.0" right="5.0" />
                      </HBox.margin>
@@ -96,7 +96,7 @@
                         <Insets left="5.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="loginTextField" alignment="TOP_LEFT" focusTraversable="false" maxHeight="23.0" prefWidth="150.0" text="efkwlw@mail.ru" HBox.hgrow="ALWAYS">
+                  <TextField fx:id="loginTextField" alignment="TOP_LEFT" focusTraversable="false" maxHeight="23.0" text="efkwlw@mail.ru" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets left="5.0" right="5.0" />
                      </HBox.margin></TextField>
@@ -116,7 +116,7 @@
                         <Insets left="5.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="passwordTextField" alignment="TOP_LEFT" focusTraversable="false" maxHeight="23.0" prefWidth="150.0" text="ufhwjkfhwjf" HBox.hgrow="ALWAYS">
+                  <TextField fx:id="passwordTextField" alignment="TOP_LEFT" focusTraversable="false" maxHeight="23.0" text="ufhwjkfhwjf" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets left="5.0" right="5.0" />
                      </HBox.margin></TextField>
@@ -136,7 +136,7 @@
                         <Insets left="5.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="dateOfBirthTextField" alignment="TOP_LEFT" focusTraversable="false" maxHeight="23.0" prefWidth="150.0" text="01.01.2000" HBox.hgrow="ALWAYS">
+                  <TextField fx:id="dateOfBirthTextField" alignment="TOP_LEFT" focusTraversable="false" maxHeight="23.0" text="01.01.2000" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets left="5.0" right="5.0" />
                      </HBox.margin></TextField>
@@ -148,15 +148,15 @@
             </HBox>
             <HBox alignment="CENTER" layoutX="15.0" layoutY="285.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="300.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="285.0">
                <children>
-                  <Label fx:id="creationDateFilledText" styleClass="data-title" text="Дата создания:">
+                  <Label fx:id="creationDateFilledText" styleClass="data-title" text="dwoidwodwpdwdwdjhwd">
                      <font>
-                        <Font name="Consolas" size="14.0" />
+                        <Font name="Consolas" size="15.0" />
                      </font>
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="creationDateTextField" alignment="TOP_LEFT" focusTraversable="false" maxHeight="23.0" prefWidth="150.0" text="25.12.2023" HBox.hgrow="ALWAYS">
+                  <TextField fx:id="creationDateTextField" alignment="TOP_LEFT" focusTraversable="false" prefColumnCount="7" text="25.12.2023" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets left="5.0" right="5.0" />
                      </HBox.margin></TextField>
@@ -176,7 +176,7 @@
                         <Insets left="5.0" />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="blockingText" focusTraversable="false" maxHeight="23.0" maxWidth="1.7976931348623157E308" styleClass="text-field" text="нет" HBox.hgrow="ALWAYS">
+                  <Label fx:id="blockingText" focusTraversable="false" maxHeight="25.0" maxWidth="1.7976931348623157E308" styleClass="text-field" text="нет" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets left="5.0" right="5.0" />
                      </HBox.margin>
@@ -213,7 +213,7 @@
             <Font name="Corbel" size="16.0" />
          </font>
       </Button>
-      <Button fx:id="changeSelectedAccount" focusTraversable="false" layoutX="425.0" layoutY="685.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="350.0" styleClass="change" text="ИЗМЕНИТЬ" />
+      <Button fx:id="changeSelectedAccountButton" focusTraversable="false" layoutX="425.0" layoutY="685.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="350.0" styleClass="change" text="ИЗМЕНИТЬ" />
       <Button fx:id="removeAccountButton" focusTraversable="false" layoutX="815.0" layoutY="685.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="350.0" styleClass="remove" text="УДАЛИТЬ" />
       <ListView fx:id="accountsList" layoutX="35.0" layoutY="27.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="775.0" />
    </children>

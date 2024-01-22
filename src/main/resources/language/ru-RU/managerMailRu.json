@@ -1,5 +1,15 @@
 {
-  "createButtonText": "СОЗДАТЬ",
-  "removeButtonText": "УДАЛИТЬ",
-  "changeSelectedButtonText": "ИЗМЕНИТЬ"
+  "createAccountButtonText": "СОЗДАТЬ",
+  "removeAccountButtonText": "УДАЛИТЬ",
+  "changeSelectedAccountButtonText": "ИЗМЕНИТЬ",
+  "resetToDefaultButtonText": "УСТАНОВИТЬ ПО-УМОЛЧАНИЮ",
+  "checkDataButtonText": "ПРОВЕРИТЬ",
+  "blockingFilledText": "Заблокированный:",
+  "creationDateFilledText": "Дата создания:",
+  "dateOfBirthFilledText": "Дата рождения:",
+  "passwordFilledText": "Пароль:",
+  "loginFilledText": "Логин:",
+  "sexFilledText": "Пол:",
+  "firstNameFilledText": "Имя:",
+  "lastNameFilledText": "Фамилия:"
 }

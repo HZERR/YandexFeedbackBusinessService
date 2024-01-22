@@ -8,6 +8,7 @@ import ru.hzerr.fx.engine.core.FXEngine;
 import ru.hzerr.fx.engine.core.context.IExtendedAnnotationConfigApplicationContext;
 import ru.hzerr.fx.engine.core.entity.Entity;
 import ru.hzerr.fx.engine.core.entity.SpringLoadMetaData;
+
 public class YandexFeedbackBusinessService extends FXEngine {
 
     @Override

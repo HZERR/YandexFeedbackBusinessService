@@ -1,5 +1,15 @@
 {
-  "createButtonText": "CREATE",
-  "removeButtonText": "REMOVE",
-  "changeSelectedButtonText": "CHANGE"
+  "createAccountButtonText": "CREATE",
+  "removeAccountButtonText": "REMOVE",
+  "changeSelectedAccountButtonText": "CHANGE",
+  "resetToDefaultButtonText": "RESET TO DEFAULT",
+  "checkDataButtonText": "CHECK",
+  "blockingFilledText": "Blocked:",
+  "creationDateFilledText": "Date of creation:",
+  "dateOfBirthFilledText": "Date of birth:",
+  "passwordFilledText": "Password:",
+  "loginFilledText": "Login:",
+  "sexFilledText": "Sex:",
+  "firstNameFilledText": "Name:",
+  "lastNameFilledText": "Surname:"
 }

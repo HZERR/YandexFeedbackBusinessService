@@ -15,7 +15,7 @@ public class LanguageChangeSubscriber extends ChangeSubscriber<Locale, Locale> {
     @Override
     public void onAccept(Locale oLocale, Locale nLocale) {
         if (nonEquals(oLocale, nLocale)) {
-            applicationManager.setLanguage(nLocale);
+            applicationManager.changeLanguage(nLocale);
             getLogProvider().getLogger().debug(STR."Язык приложения изменен на '\{nLocale.getLanguage()}'");
         }
     }
