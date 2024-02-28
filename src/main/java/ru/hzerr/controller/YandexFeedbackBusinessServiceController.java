@@ -19,13 +19,9 @@ import java.util.function.Consumer;
 @FXEntity(fxml = "yandexFeedbackBusinessService.fxml", internationalization = "yandexFeedbackBusinessService.json", theme = "yandexFeedbackBusinessService.css")
 public class YandexFeedbackBusinessServiceController extends Controller {
 
-    @FXML
-    private AnchorPane content, tabContent;
-    @FXML
-    private Label managerMailRuTitleLabel, managerYandexTitleLabel, appSettingsTitleLabel;
-
-    @FXML
-    private SVGPath managerMailRuTab, managerYandexTab, appSettingsTab;
+    @FXML private AnchorPane content, tabContent;
+    @FXML private Label managerMailRuTitleLabel, managerYandexTitleLabel, appSettingsTitleLabel;
+    @FXML private SVGPath managerMailRuTab, managerYandexTab, appSettingsTab;
 
     private Entity<MailRuAccountMasterController, Parent> managerMailRuEntity;
     private Entity<AppSettingsController, Parent> appSettingsEntity;

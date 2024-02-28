@@ -4,7 +4,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane fx:id="content" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="747.0" prefWidth="1200.0" styleClass="container" stylesheets="@../theme/asus/appSettings.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox alignment="CENTER" layoutX="75.0" layoutY="75.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="500.0" styleClass="grouping-data-first">
@@ -37,12 +36,12 @@
       </HBox>
       <HBox alignment="CENTER" layoutX="75.0" layoutY="225.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="500.0" styleClass="grouping-data-last">
          <children>
-            <Label styleClass="data-title" text="Базовое изображение:">
+            <Label styleClass="data-title" text="Использовать OCR:">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
             </Label>
-            <ComboBox maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+            <ComboBox fx:id="ocrComboBox" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets left="10.0" right="10.0" />
                </HBox.margin>
