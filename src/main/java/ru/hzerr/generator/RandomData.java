@@ -3,7 +3,7 @@ package ru.hzerr.generator;
 import com.google.gson.JsonObject;
 import ru.hzerr.model.Gender;
 
-public class GenerationResult {
+public class RandomData {
 
     private final JsonObject result;
     private final String FIRST_NAME_FIELD = "FirstName";
@@ -12,7 +12,7 @@ public class GenerationResult {
     private final String GENDER_FIELD = "Gender";
     private final String PHONE_FIELD = "Phone";
 
-    public GenerationResult(JsonObject result) {
+    public RandomData(JsonObject result) {
         this.result = result;
     }
 

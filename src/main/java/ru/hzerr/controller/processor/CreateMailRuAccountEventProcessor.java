@@ -6,12 +6,11 @@ import javafx.scene.control.ListView;
 import ru.hzerr.configuration.database.repository.IEmailRepository;
 import ru.hzerr.fx.engine.core.annotation.Include;
 import ru.hzerr.fx.engine.core.annotation.Registered;
-import ru.hzerr.fx.engine.core.annotation.as.ApplicationLogProvider;
 import ru.hzerr.fx.engine.core.javafx.event.ActionEventProcessor;
-import ru.hzerr.fx.engine.logging.provider.ILogProvider;
 import ru.hzerr.generator.*;
 import ru.hzerr.model.Gender;
-import ru.hzerr.model.MailRuAccount;
+import ru.hzerr.model.MailRuRecord;
+import ru.hzerr.service.mail.IEmailService;
 
 import java.time.LocalDateTime;
 
@@ -19,29 +18,36 @@ import java.time.LocalDateTime;
 public class CreateMailRuAccountEventProcessor extends ActionEventProcessor {
 
     public static final int LOGIN_CHARACTER_LENGTH = 12;
-    private ListView<MailRuAccount> accounts;
+    private ListView<MailRuRecord> accounts;
+
+    private IEmailService emailService;
     private final ILoginGenerator loginGenerator = new RandomAlphanumericLoginGenerator(LOGIN_CHARACTER_LENGTH);
     private RandomDataToolsGenerator randomDataGenerator;
-    private final IEmailRepository<MailRuAccount> repository;
+    private final IEmailRepository<MailRuRecord> repository;
 
     private static final String BACKUP_EMAIL_ADDRESS = "vadimvyazloy@yandex.ru";
 
-    private final Converter<GenerationResult, MailRuAccount> mailRuAccountConverter = new GenerationResultToMailRuAccountConverter();
+    private final Converter<RandomData, MailRuRecord> mailRuAccountConverter = new GenerationResultToMailRuAccountConverter();
 
     @Include
-    public CreateMailRuAccountEventProcessor(IEmailRepository<MailRuAccount> repository) {
+    public CreateMailRuAccountEventProcessor(IEmailRepository<MailRuRecord> repository) {
         this.repository = repository;
     }
 
     @Override
     protected void onProcess(ActionEvent actionEvent) throws Exception {
         getLogProvider().getLogger().debug("Генерируем данные...");
-        GenerationResult generationResult = randomDataGenerator
+        RandomData randomData = randomDataGenerator
                 .addFirstName()
                 .addLastName()
                 .addDateOfBirth()
                 .addGender()
                 .generate();
+
+        emailService.create(randomData);
+        if (true) {
+            return;
+        }
 
         getLogProvider().getLogger().debug("Запускаем браузер...");
         try (Playwright playwright = Playwright.create()) {
@@ -49,7 +55,7 @@ public class CreateMailRuAccountEventProcessor extends ActionEventProcessor {
                 try (BrowserContext context = browser.newContext()) {
                     try (Page page = context.newPage()) {
                         getLogProvider().getLogger().debug("Заполняем форму...");
-                        MailRuAccount account = mailRuAccountConverter.convert(generationResult);
+                        MailRuRecord account = mailRuAccountConverter.convert(randomData);
                         page.navigate("https://account.mail.ru/signup");
                         page.fill("#fname", account.getFirstName());
                         page.fill("#lname", account.getLastName());
@@ -116,7 +122,12 @@ public class CreateMailRuAccountEventProcessor extends ActionEventProcessor {
         this.randomDataGenerator = randomDataGenerator;
     }
 
-    public void setAccounts(ListView<MailRuAccount> accounts) {
+    public void setAccounts(ListView<MailRuRecord> accounts) {
         this.accounts = accounts;
+    }
+
+    @Include
+    public void setEmailService(IEmailService emailService) {
+        this.emailService = emailService;
     }
 }

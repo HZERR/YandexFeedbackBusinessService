@@ -1,33 +1,25 @@
 package ru.hzerr.controller;
 
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import ru.hzerr.configuration.database.repository.IEmailRepository;
 import ru.hzerr.controller.processor.CheckAccountProcessor;
 import ru.hzerr.controller.processor.CreateMailRuAccountEventProcessor;
-import ru.hzerr.fx.engine.core.FXEngine;
 import ru.hzerr.fx.engine.core.annotation.FXController;
 import ru.hzerr.fx.engine.core.annotation.FXEntity;
 import ru.hzerr.fx.engine.core.annotation.Include;
-import ru.hzerr.fx.engine.core.annotation.Registered;
-import ru.hzerr.fx.engine.core.concurrent.function.FXConsumer;
 import ru.hzerr.fx.engine.core.entity.Controller;
-import ru.hzerr.fx.engine.core.entity.Entity;
 import ru.hzerr.fx.engine.core.entity.EntityLoader;
 import ru.hzerr.fx.engine.core.entity.SpringLoadMetaData;
 import ru.hzerr.fx.engine.core.javafx.list.BasicCellFactory;
 import ru.hzerr.fx.engine.core.javafx.list.BasicListCell;
 import ru.hzerr.fx.engine.core.language.ILocalization;
 import ru.hzerr.model.Gender;
-import ru.hzerr.model.MailRuAccount;
+import ru.hzerr.model.MailRuRecord;
 
 import java.time.format.DateTimeFormatter;
 
@@ -36,7 +28,7 @@ import java.time.format.DateTimeFormatter;
 public class MailRuAccountMasterController extends Controller {
 
     @FXML private AnchorPane informationPane;
-    @FXML private ListView<MailRuAccount> accountsList;
+    @FXML private ListView<MailRuRecord> accountsList;
 
     @FXML
     private Label blockedFilledText, creationDateFilledText, dateOfBirthFilledText, firstNameFilledText, lastNameFilledText, loginFilledText, passwordFilledText, sexFilledText;
@@ -53,7 +45,7 @@ public class MailRuAccountMasterController extends Controller {
 
     private CreateMailRuAccountEventProcessor createMailRuAccountEventProcessor;
     private CheckAccountProcessor checkAccountProcessor;
-    private IEmailRepository<MailRuAccount> repository;
+    private IEmailRepository<MailRuRecord> repository;
 
     @Override
     protected void onInit() {
@@ -63,10 +55,10 @@ public class MailRuAccountMasterController extends Controller {
         checkDataButton.setOnAction(checkAccountProcessor);
         accountsList.setCellFactory(new BasicCellFactory<>() {
             @Override
-            public BasicListCell<MailRuAccount> createListCell() {
+            public BasicListCell<MailRuRecord> createListCell() {
                 return new BasicListCell<>() {
                     @Override
-                    public void onUpdateItem(MailRuAccount item, boolean empty) {
+                    public void onUpdateItem(MailRuRecord item, boolean empty) {
                         if (!empty) {
                             setText(item.getLogin());
                         }
@@ -96,15 +88,7 @@ public class MailRuAccountMasterController extends Controller {
         });
 
         accountsList.getSelectionModel().selectFirst();
-        changeSelectedAccountButton.setOnAction(event -> {
-            getLogProvider().getLogger().info("Stage before init: {}", FXEngine.getContext().getStage());
-            FXEngine.getContext().setStage((Stage)((Node) event.getSource()).getScene().getWindow());
-            getLogProvider().getLogger().info("Stage after init: {}", FXEngine.getContext().getStage());
-            entityLoader.loadAsync(SpringLoadMetaData.from(InputCaptchaController.class), Parent.class).thenFXAccept(entity -> {
-                InputCaptchaController inputCaptchaController = entity.getController();
-                inputCaptchaController.view();
-            });
-        });
+        changeSelectedAccountButton.setOnAction(event -> entityLoader.view(SpringLoadMetaData.from(InputCaptchaController.class), Parent.class));
     }
 
     @Override
@@ -159,7 +143,7 @@ public class MailRuAccountMasterController extends Controller {
     }
 
     @Include
-    public void setRepository(IEmailRepository<MailRuAccount> repository) {
+    public void setRepository(IEmailRepository<MailRuRecord> repository) {
         this.repository = repository;
     }
 

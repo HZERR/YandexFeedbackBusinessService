@@ -4,35 +4,35 @@ import ru.hzerr.collections.list.HList;
 import ru.hzerr.configuration.database.JsonFileSystemDatabase;
 import ru.hzerr.fx.engine.core.annotation.Include;
 import ru.hzerr.fx.engine.core.annotation.Registered;
-import ru.hzerr.model.MailRuAccount;
+import ru.hzerr.model.MailRuRecord;
 
 @Registered
-public class MailRuRepository implements IEmailRepository<MailRuAccount> {
+public class MailRuRepository implements IEmailRepository<MailRuRecord> {
 
-    private JsonFileSystemDatabase<MailRuAccount> database;
+    private JsonFileSystemDatabase<MailRuRecord> database;
 
     @Include
-    public MailRuRepository(JsonFileSystemDatabase<MailRuAccount> database) {
+    public MailRuRepository(JsonFileSystemDatabase<MailRuRecord> database) {
         this.database = database;
     }
 
     @Override
-    public HList<MailRuAccount> getEmails() {
-        return HList.of(database.get(MailRuAccount.class));
+    public HList<MailRuRecord> getEmails() {
+        return HList.of(database.get(MailRuRecord.class));
     }
 
     @Override
-    public MailRuAccount getEmail(String login) {
-        return database.get(login, MailRuAccount.class);
+    public MailRuRecord getEmail(String login) {
+        return database.get(login, MailRuRecord.class);
     }
 
     @Override
-    public void addEmail(MailRuAccount email) {
+    public void addEmail(MailRuRecord email) {
         database.add(email.getLogin(), email);
     }
 
     @Override
-    public void changeEmail(MailRuAccount email) {
+    public void changeEmail(MailRuRecord email) {
         database.update(email.getLogin(), email);
     }
 

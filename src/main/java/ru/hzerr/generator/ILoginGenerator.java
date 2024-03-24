@@ -1,4 +1,6 @@
 package ru.hzerr.generator;
 
-public interface ILoginGenerator extends IGenerator<String> {
+public interface ILoginGenerator {
+
+    String generate();
 }

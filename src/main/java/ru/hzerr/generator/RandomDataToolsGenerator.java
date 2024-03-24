@@ -27,7 +27,7 @@ public class RandomDataToolsGenerator implements IGenerator<Object> {
     private ILogProvider logProvider;
 
     private RandomDataToolsGenerator() {
-        gender = RandomUtils.nextInt(0, 1) == 0 ? Gender.FEMALE : Gender.MALE;
+        gender = RandomUtils.nextInt(0, 2) == 0 ? Gender.FEMALE : Gender.MALE;
     }
 
     public RandomDataToolsGenerator addFirstName() {
@@ -55,7 +55,7 @@ public class RandomDataToolsGenerator implements IGenerator<Object> {
         return this;
     }
 
-    public GenerationResult generate() throws GenerationException {
+    public RandomData generate() throws GenerationException {
         if (params == null) {
             throw new IllegalArgumentException("params must not be null");
         }
@@ -74,7 +74,7 @@ public class RandomDataToolsGenerator implements IGenerator<Object> {
                     case FEMALE -> responseAsJsonObject.addProperty("Gender", "Женщина");
                 }
 
-                return new GenerationResult(responseAsJsonObject);
+                return new RandomData(responseAsJsonObject);
             } else
                 throw new GenerationException(STR."Invalid status code: \{response.statusCode()}");
         } catch (IOException | URISyntaxException e) {

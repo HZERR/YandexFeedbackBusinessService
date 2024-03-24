@@ -5,13 +5,10 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import ru.hzerr.util.JsonToStringStyle;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class MailRuAccount implements Serializable {
+public class MailRuRecord implements Serializable {
 
     private boolean created;
     private CreationStatus creationStatus;
@@ -117,7 +114,7 @@ public class MailRuAccount implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
 
-        if (o instanceof MailRuAccount account) {
+        if (o instanceof MailRuRecord account) {
             return new EqualsBuilder()
                     .append(created, account.created)
                     .append(blocked, account.blocked)

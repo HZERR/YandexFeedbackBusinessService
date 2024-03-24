@@ -25,7 +25,7 @@ public class EmailValidator implements IEmailValidator {
     }
 
     @Override
-    public EmailValidationStatus validate(MailRuAccount account) throws InterruptedException {
+    public EmailValidationStatus validate(MailRuRecord account) throws InterruptedException {
         try (Browser browser = Browser.create(browserOptions)) {
             try (Page page = browser.openPage(MAIL_RU_LOGIN_URL, new Page.NavigateOptions().setWaitUntil(WaitUntilState.NETWORKIDLE))) {
                 FrameLocator loginFrame = page.frameLocator(selectorNamingStrategy.getLoginFrameSelector());

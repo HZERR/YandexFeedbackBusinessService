@@ -1,20 +1,20 @@
 package ru.hzerr.generator;
 
 import ru.hzerr.model.CreationStatus;
-import ru.hzerr.model.MailRuAccount;
+import ru.hzerr.model.MailRuRecord;
 
-public class GenerationResultToMailRuAccountConverter implements Converter<GenerationResult, MailRuAccount> {
+public class GenerationResultToMailRuAccountConverter implements Converter<RandomData, MailRuRecord> {
 
     @Override
-    public MailRuAccount convert(GenerationResult generationResult) {
-        MailRuAccount account = new MailRuAccount();
+    public MailRuRecord convert(RandomData randomData) {
+        MailRuRecord account = new MailRuRecord();
         account.setBlocked(false);
         account.setCreated(false);
         account.setCreationStatus(CreationStatus.DEFAULT);
-        account.setGender(generationResult.getGender());
-        account.setFirstName(generationResult.getFirstName());
-        account.setLastName(generationResult.getLastName());
-        account.setDateOfBirth(generationResult.getDateOfBirth());
+        account.setGender(randomData.getGender());
+        account.setFirstName(randomData.getFirstName());
+        account.setLastName(randomData.getLastName());
+        account.setDateOfBirth(randomData.getDateOfBirth());
 
         return account;
     }

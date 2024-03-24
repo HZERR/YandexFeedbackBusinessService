@@ -5,16 +5,16 @@ import javafx.scene.control.ListView;
 import ru.hzerr.fx.engine.core.annotation.Registered;
 import ru.hzerr.model.EmailValidator;
 import ru.hzerr.model.IEmailValidator;
-import ru.hzerr.model.MailRuAccount;
+import ru.hzerr.model.MailRuRecord;
 
 @Registered
 public class CheckAccountProcessor extends AsyncActionEventProcessor {
 
-    private ListView<MailRuAccount> accounts;
+    private ListView<MailRuRecord> accounts;
 
     @Override
     protected void onProcess(ActionEvent actionEvent) throws InterruptedException {
-        MailRuAccount account = accounts.getSelectionModel().getSelectedItem();
+        MailRuRecord account = accounts.getSelectionModel().getSelectedItem();
         if (account != null) {
             getLogProvider().getLogger().debug("Проверка аккаунта: {}", account.getLogin());
             IEmailValidator emailValidator = new EmailValidator();
@@ -35,7 +35,7 @@ public class CheckAccountProcessor extends AsyncActionEventProcessor {
         getLogProvider().getLogger().error(e.getMessage(), e);
     }
 
-    public void setListView(ListView<MailRuAccount> accounts) {
+    public void setListView(ListView<MailRuRecord> accounts) {
         this.accounts = accounts;
     }
 }
