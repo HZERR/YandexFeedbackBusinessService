@@ -8,4 +8,5 @@ public interface IExtendedStructureConfiguration extends IStructureConfiguration
 
     BaseDirectory getDatabaseDirectory();
     BaseFile getMailRuDatabaseFile();
+    BaseFile getApplicationSettingsFile();
 }

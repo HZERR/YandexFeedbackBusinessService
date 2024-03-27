@@ -2,8 +2,11 @@ package ru.hzerr.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.util.StringConverter;
+import ru.hzerr.configuration.application.IApplicationSettings;
 import ru.hzerr.controller.converter.LocaleToStringConverter;
 import ru.hzerr.controller.listener.LanguageChangeSubscriber;
+import ru.hzerr.controller.listener.OCRChangeSubscriber;
 import ru.hzerr.fx.engine.configuration.application.IApplicationConfiguration;
 import ru.hzerr.fx.engine.core.annotation.FXController;
 import ru.hzerr.fx.engine.core.annotation.FXEntity;
@@ -22,10 +25,14 @@ public class AppSettingsController extends Controller {
     private ComboBox<Locale> languageComboBox;
     @FXML
     private ComboBox<Class<? extends ThemeMetaData>> themeComboBox;
+    @FXML
+    private ComboBox<Boolean> ocrComboBox;
 
     private LanguageChangeSubscriber languageChangeSubscriber;
+    private OCRChangeSubscriber ocrChangeSubscriber;
     private Locale LOCALE_RU = Locale.of("ru", "RU");
     private IApplicationConfiguration applicationConfiguration;
+    private IApplicationSettings applicationSettings;
 
     @Override
     protected void onInit() {
@@ -33,6 +40,22 @@ public class AppSettingsController extends Controller {
         languageComboBox.setConverter(new LocaleToStringConverter());
         languageComboBox.getSelectionModel().select(applicationConfiguration.getLocale());
         languageComboBox.getSelectionModel().selectedItemProperty().subscribe(languageChangeSubscriber);
+        ocrComboBox.setConverter(new StringConverter<>() {
+            @Override
+            public String toString(Boolean ocrEnabled) {
+                if (ocrEnabled == null) return null;
+
+                // Добавить листенер для localization provider и вынести конвертер в отдельный класс
+                return getLocalizationProvider().getLocalization().getConfiguration().getString(ocrEnabled ? "yes" : "no");
+            }
+
+            @Override
+            public Boolean fromString(String ocrEnabled) {
+                if (ocrEnabled == null) return false;
+                return getLocalizationProvider().getLocalization().getConfiguration().getString("yes").equals(ocrEnabled);
+            }
+        });
+        ocrComboBox.getSelectionModel().selectedItemProperty().subscribe(ocrChangeSubscriber);
     }
 
     @Override
@@ -41,7 +64,8 @@ public class AppSettingsController extends Controller {
 
     @Override
     protected void onChangeLanguage(ILocalization localization) {
-
+        ocrComboBox.getItems().setAll(true, false);
+        ocrComboBox.getSelectionModel().select(applicationSettings.isOCREnabled());
     }
 
     @Override
@@ -55,7 +79,17 @@ public class AppSettingsController extends Controller {
     }
 
     @Include
+    public void setApplicationSettings(IApplicationSettings applicationSettings) {
+        this.applicationSettings = applicationSettings;
+    }
+
+    @Include
     public void setLanguageChangeSubscriber(LanguageChangeSubscriber languageChangeSubscriber) {
         this.languageChangeSubscriber = languageChangeSubscriber;
+    }
+
+    @Include
+    public void setOCRChangeSubscriber(OCRChangeSubscriber ocrChangeSubscriber) {
+        this.ocrChangeSubscriber = ocrChangeSubscriber;
     }
 }

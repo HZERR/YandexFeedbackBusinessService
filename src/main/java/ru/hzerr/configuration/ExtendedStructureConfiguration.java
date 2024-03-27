@@ -23,6 +23,11 @@ public class ExtendedStructureConfiguration implements IExtendedStructureConfigu
     }
 
     @Override
+    public BaseFile getApplicationSettingsFile() {
+        return getConfigDirectory().getSubFile("settings.ini");
+    }
+
+    @Override
     public BaseDirectory getProgramDirectory() {
         return new HDirectory(STR."\{SystemInfo.getUserHome()}\{File.separator}YandexFeedbackBusinessService");
     }

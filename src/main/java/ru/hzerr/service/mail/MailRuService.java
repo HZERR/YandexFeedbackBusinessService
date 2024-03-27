@@ -81,6 +81,9 @@ public class MailRuService implements IEmailService {
                 page.fill(namingStrategy.reservedEmailSelector(), record.getReservedEmail());
 
                 // if proxy invalid => reload form
+
+                // click 'OK' button
+                page.click("#root > div > div.-iGylzk8u50zKdna3C_sh > div:nth-child(4) > div > div > div > div > form > button");
             }
         }
 
