@@ -77,14 +77,14 @@ public class MailRuAccountMasterController extends Controller {
             dateOfBirthTextField.setText(nValue.getDateOfBirth());
             creationDateTextField.setText(nValue.getCreatedDate().format(DateTimeFormatter.ISO_DATE));
             if (nValue.getGender() == Gender.MALE) {
-                sexText.setText(getLocalizationProvider().getLocalization().getConfiguration().getString("sexMale"));
+                acceptLocalizationProvider(localizationProvider -> sexText.setText(localizationProvider.getLocalization().getConfiguration().getString("sexMale")));
             } else
-                sexText.setText(getLocalizationProvider().getLocalization().getConfiguration().getString("sexFemale"));
+                acceptLocalizationProvider(localizationProvider -> sexText.setText(localizationProvider.getLocalization().getConfiguration().getString("sexFemale")));
 
             if (nValue.isBlocked()) {
-                blockingText.setText(getLocalizationProvider().getLocalization().getConfiguration().getString("blockingYes"));
+                acceptLocalizationProvider(localizationProvider -> blockingText.setText(localizationProvider.getLocalization().getConfiguration().getString("blockingYes")));
             } else
-                blockingText.setText(getLocalizationProvider().getLocalization().getConfiguration().getString("blockingNo"));
+                acceptLocalizationProvider(localizationProvider -> blockingText.setText(localizationProvider.getLocalization().getConfiguration().getString("blockingNo")));
         });
 
         accountsList.getSelectionModel().selectFirst();

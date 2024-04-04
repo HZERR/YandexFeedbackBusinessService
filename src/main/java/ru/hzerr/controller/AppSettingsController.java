@@ -7,7 +7,6 @@ import ru.hzerr.configuration.application.IApplicationSettings;
 import ru.hzerr.controller.converter.LocaleToStringConverter;
 import ru.hzerr.controller.listener.LanguageChangeSubscriber;
 import ru.hzerr.controller.listener.OCRChangeSubscriber;
-import ru.hzerr.fx.engine.configuration.application.IApplicationConfiguration;
 import ru.hzerr.fx.engine.core.annotation.FXController;
 import ru.hzerr.fx.engine.core.annotation.FXEntity;
 import ru.hzerr.fx.engine.core.annotation.Include;
@@ -31,31 +30,36 @@ public class AppSettingsController extends Controller {
     private LanguageChangeSubscriber languageChangeSubscriber;
     private OCRChangeSubscriber ocrChangeSubscriber;
     private Locale LOCALE_RU = Locale.of("ru", "RU");
-    private IApplicationConfiguration applicationConfiguration;
     private IApplicationSettings applicationSettings;
 
     @Override
     protected void onInit() {
         languageComboBox.getItems().addAll(LOCALE_RU, Locale.ENGLISH);
         languageComboBox.setConverter(new LocaleToStringConverter());
-        languageComboBox.getSelectionModel().select(applicationConfiguration.getLocale());
+        languageComboBox.getSelectionModel().select(getApplicationConfiguration().getLocale());
         languageComboBox.getSelectionModel().selectedItemProperty().subscribe(languageChangeSubscriber);
+        addLocalizationChangeListener((observable, oValue, nValue) -> {
+            ocrComboBox.getItems().setAll(true, false);
+            ocrComboBox.getSelectionModel().select(applicationSettings.isOCREnabled());
+        });
         ocrComboBox.setConverter(new StringConverter<>() {
             @Override
             public String toString(Boolean ocrEnabled) {
                 if (ocrEnabled == null) return null;
 
-                // Добавить листенер для localization provider и вынести конвертер в отдельный класс
-                return getLocalizationProvider().getLocalization().getConfiguration().getString(ocrEnabled ? "yes" : "no");
+                return applyLocalizationProvider(localizationProvider -> localizationProvider.getLocalization().getConfiguration().getString(ocrEnabled ? "yes" : "no"));
             }
 
             @Override
             public Boolean fromString(String ocrEnabled) {
                 if (ocrEnabled == null) return false;
-                return getLocalizationProvider().getLocalization().getConfiguration().getString("yes").equals(ocrEnabled);
+
+                return applyLocalizationProvider(localizationProvider -> localizationProvider.getLocalization().getConfiguration().getString("yes").equals(ocrEnabled));
             }
         });
         ocrComboBox.getSelectionModel().selectedItemProperty().subscribe(ocrChangeSubscriber);
+        ocrComboBox.getItems().addAll(true, false);
+        ocrComboBox.getSelectionModel().select(applicationSettings.isOCREnabled());
     }
 
     @Override
@@ -64,18 +68,12 @@ public class AppSettingsController extends Controller {
 
     @Override
     protected void onChangeLanguage(ILocalization localization) {
-        ocrComboBox.getItems().setAll(true, false);
-        ocrComboBox.getSelectionModel().select(applicationSettings.isOCREnabled());
+
     }
 
     @Override
     protected String id() {
         return "appSettings";
-    }
-
-    @Include
-    public void setApplicationConfiguration(IApplicationConfiguration applicationConfiguration) {
-        this.applicationConfiguration = applicationConfiguration;
     }
 
     @Include
