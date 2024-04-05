@@ -85,4 +85,19 @@ public class MailRuServiceSelectorNamingStrategy implements IMailRuServiceSelect
     public String reservedEmailSelector() {
         return "#extra-email";
     }
+
+    @Override
+    public String switchCaptchaFormSelector() {
+        return "#root > div > div.-iGylzk8u50zKdna3C_sh > div:nth-child(4) > div > div > div > div > form > button";
+    }
+
+    @Override
+    public String captchaSelector() {
+        return "#root > div > div.-iGylzk8u50zKdna3C_sh > div:nth-child(3) > div > div > div > form > div:nth-child(7) > img";
+    }
+
+    @Override
+    public String errorSelector() {
+        return "#root > div > div.-iGylzk8u50zKdna3C_sh > div:nth-child(3) > div > div > div > form > div:nth-child(7) > div > div.formRow-0-2-100 > div > div.error-0-2-102 > small";
+    }
 }

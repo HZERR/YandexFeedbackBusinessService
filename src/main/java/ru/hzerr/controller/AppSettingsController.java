@@ -29,7 +29,7 @@ public class AppSettingsController extends Controller {
 
     private LanguageChangeSubscriber languageChangeSubscriber;
     private OCRChangeSubscriber ocrChangeSubscriber;
-    private Locale LOCALE_RU = Locale.of("ru", "RU");
+    private final Locale LOCALE_RU = Locale.of("ru", "RU");
     private IApplicationSettings applicationSettings;
 
     @Override

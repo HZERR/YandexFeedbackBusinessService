@@ -18,4 +18,7 @@ public interface IMailRuServiceSelectorNamingStrategy {
     String changeFocusSelector();
     String showReservedEmailInputSelector();
     String reservedEmailSelector();
+    String switchCaptchaFormSelector();
+    String captchaSelector();
+    String errorSelector();
 }

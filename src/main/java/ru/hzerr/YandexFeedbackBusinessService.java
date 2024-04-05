@@ -26,6 +26,7 @@ public class YandexFeedbackBusinessService extends FXEngine {
         stage.setResizable(false);
         stage.requestFocus();
 
+        stage.setTitle("Yandex FBS");
         stage.getIcons().addFirst(new Image(Objects.requireNonNull(YandexFeedbackBusinessService.class.getResourceAsStream(RELATIVE_PATH_TO_LOGO))));
 
         Entity<YandexFeedbackBusinessServiceController, Parent> entity = context.getEntityLoader()

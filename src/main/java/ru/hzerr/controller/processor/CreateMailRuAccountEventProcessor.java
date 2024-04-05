@@ -6,16 +6,17 @@ import javafx.scene.control.ListView;
 import ru.hzerr.configuration.database.repository.IEmailRepository;
 import ru.hzerr.fx.engine.core.annotation.Include;
 import ru.hzerr.fx.engine.core.annotation.Registered;
-import ru.hzerr.fx.engine.core.javafx.event.ActionEventProcessor;
 import ru.hzerr.generator.*;
 import ru.hzerr.model.Gender;
 import ru.hzerr.model.MailRuRecord;
 import ru.hzerr.service.mail.IEmailService;
+import ru.hzerr.service.mail.Response;
 
 import java.time.LocalDateTime;
 
+// TODO НАПИСАТЬ СПЯЩИЙ РЕЖИМ ПРОГРАММЫ ПРИ СОЗДАНИИ АККАУНТА
 @Registered
-public class CreateMailRuAccountEventProcessor extends ActionEventProcessor {
+public class CreateMailRuAccountEventProcessor extends AsyncActionEventProcessor {
 
     public static final int LOGIN_CHARACTER_LENGTH = 12;
     private ListView<MailRuRecord> accounts;
@@ -44,7 +45,14 @@ public class CreateMailRuAccountEventProcessor extends ActionEventProcessor {
                 .addGender()
                 .generate();
 
-        emailService.create(randomData);
+        Response<MailRuRecord> recordResponse = emailService.create(randomData);
+        if (recordResponse.isSuccess()) {
+            repository.addEmail(recordResponse.getResponse());
+            getLogProvider().getLogger().debug(STR."Аккаунт \{recordResponse.getResponse().getLogin()} успешно зарегистрирован в базе данных");
+            accounts.getItems().add(recordResponse.getResponse());
+        } else
+            getLogProvider().getLogger().debug("Операция создания аккаунта была отменена пользователем");
+
         if (true) {
             return;
         }
