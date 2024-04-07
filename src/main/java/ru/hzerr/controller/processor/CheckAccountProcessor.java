@@ -3,6 +3,7 @@ package ru.hzerr.controller.processor;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ListView;
 import ru.hzerr.fx.engine.core.annotation.Registered;
+import ru.hzerr.fx.engine.core.javafx.event.async.AsyncActionEventProcessor;
 import ru.hzerr.model.EmailValidator;
 import ru.hzerr.model.IEmailValidator;
 import ru.hzerr.model.MailRuRecord;

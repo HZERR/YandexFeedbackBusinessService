@@ -11,6 +11,7 @@ public class Browser implements AutoCloseable {
     private BrowserContext browserContext;
 
     private Browser() {
+        Runtime.getRuntime().addShutdownHook(Thread.ofVirtual().unstarted(this::close));
     }
 
     public Page openPage(String url) {

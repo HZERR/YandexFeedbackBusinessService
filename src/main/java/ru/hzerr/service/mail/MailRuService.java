@@ -12,6 +12,7 @@ import ru.hzerr.fx.engine.core.annotation.Registered;
 import ru.hzerr.fx.engine.core.annotation.as.ApplicationLogProvider;
 import ru.hzerr.fx.engine.core.entity.IEntityLoader;
 import ru.hzerr.fx.engine.core.entity.SpringLoadMetaData;
+import ru.hzerr.fx.engine.core.entity.exception.LoadControllerException;
 import ru.hzerr.fx.engine.logging.provider.ILogProvider;
 import ru.hzerr.generator.ILoginGenerator;
 import ru.hzerr.generator.MailRuCreationInterruptedException;
@@ -26,6 +27,7 @@ import ru.hzerr.service.mail.naming.strategy.IMailRuServiceSelectorNamingStrateg
 import ru.hzerr.service.mail.naming.strategy.MailRuServiceSelectorNamingStrategy;
 import ru.hzerr.service.proxy.IProxyService;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.concurrent.ExecutionException;
 
@@ -54,7 +56,7 @@ public class MailRuService implements IEmailService {
         logProvider.getLogger().debug("Запускаем браузер...");
         try (Browser browser = Browser.create(BrowserOptions.create()
                 .setBrowserType(BrowserType.CHROMIUM)
-                .setLaunchOptions(new com.microsoft.playwright.BrowserType.LaunchOptions().setHeadless(true)))) {
+                .setLaunchOptions(new com.microsoft.playwright.BrowserType.LaunchOptions().setHeadless(false)))) {
 
             try (Page page = browser.openPage("https://account.mail.ru/signup")) {
                 logProvider.getLogger().debug("Заполняем форму...");
@@ -106,13 +108,13 @@ public class MailRuService implements IEmailService {
                 }
 
                 // НАЧАТЬ ЧЕКАТЬ ОТСЮДА. ДОБАВИТЬ ВАЛИДАЦИЮ ПУСТОГО ТЕКСТА В InputCaptchaController
-                Thread.sleep(100000000);
+                page.waitForURL(url -> url.contains("e.mail.ru/inbox"));
 
                 record.setCreated(true);
                 record.setCreatedDate(LocalDateTime.now());
                 logProvider.getLogger().debug(STR."Аккаунт успешно создан: \{record}");
 
-            } catch (InterruptedException | ExecutionException e) {
+            } catch (InterruptedException | ExecutionException | LoadControllerException | IOException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -120,7 +122,7 @@ public class MailRuService implements IEmailService {
         return Response.from(record);
     }
 
-    private boolean bypass(Page page) throws ExecutionException, InterruptedException {
+    private boolean bypass(Page page) throws ExecutionException, InterruptedException, LoadControllerException, IOException {
         ElementHandle captchaLocator = page.waitForSelector(namingStrategy.captchaSelector());
 
         // wait loading the captcha
@@ -153,16 +155,12 @@ public class MailRuService implements IEmailService {
         return true;
     }
 
-    private String decode(byte[] captcha) throws ExecutionException, InterruptedException {
+    private String decode(byte[] captcha) throws InterruptedException, LoadControllerException, IOException {
         boolean ocrEnabled = applicationSettings.isOCREnabled();
         // if (ocrEnabled) {} else {} e.t.c
         // maybe change view method non throws?
         logProvider.getLogger().debug("Byte[]: {}", captcha);
         InputCaptchaController controller = entityLoader.view(SpringLoadMetaData.from(InputCaptchaController.class, (Object) captcha), Parent.class)
-                .exceptionally(e -> {
-                    logProvider.getLogger().error(e.getMessage(), e);
-                })
-                .get()
                 .getController();
 
         return controller.awaitDecodedCaptcha();

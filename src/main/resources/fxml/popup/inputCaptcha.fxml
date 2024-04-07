@@ -3,20 +3,15 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-
 <AnchorPane fx:id="content" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" styleClass="container" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label fx:id="title" alignment="CENTER" layoutX="175.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="250.0" styleClass="title" text="Input the captcha" />
       <ImageView fx:id="captchaImage" fitHeight="200.0" fitWidth="560.0" layoutX="20.0" layoutY="50.0" pickOnBounds="true" styleClass="captcha">
-         <image>
-            <Image url="@../../../../../../../Desktop/pic.jpg" />
-         </image>
       </ImageView>
       <TextField fx:id="captchaTextField" focusTraversable="false" layoutX="150.0" layoutY="260.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="300.0" />
-      <Button fx:id="apply" focusTraversable="false" layoutX="455.0" layoutY="260.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="125.0" styleClass="create" text="APPLY" AnchorPane.rightAnchor="20.0" />
+      <Button fx:id="apply" disable="true" focusTraversable="false" layoutX="455.0" layoutY="260.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="125.0" styleClass="create" text="APPLY" AnchorPane.rightAnchor="20.0" />
       <Button fx:id="close" focusTraversable="false" layoutX="20.0" layoutY="260.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="125.0" styleClass="remove" text="CLOSE" />
    </children>
 </AnchorPane>

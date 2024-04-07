@@ -44,6 +44,7 @@ public class InputCaptchaController extends PopupController {
         });
 
         captchaTextField.requestFocus();
+        captchaTextField.textProperty().addListener(((observable, oValue, nValue) -> apply.setDisable(nValue == null || nValue.isEmpty())));
 
         popup.centerOnScreen();
         popup.setAutoFix(true);

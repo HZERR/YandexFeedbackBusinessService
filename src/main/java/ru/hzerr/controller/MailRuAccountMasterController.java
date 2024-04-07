@@ -88,7 +88,6 @@ public class MailRuAccountMasterController extends Controller {
         });
 
         accountsList.getSelectionModel().selectFirst();
-        changeSelectedAccountButton.setOnAction(event -> entityLoader.view(SpringLoadMetaData.from(InputCaptchaController.class), Parent.class));
     }
 
     @Override
