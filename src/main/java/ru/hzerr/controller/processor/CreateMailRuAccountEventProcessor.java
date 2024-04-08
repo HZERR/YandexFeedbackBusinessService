@@ -1,5 +1,6 @@
 package ru.hzerr.controller.processor;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ListView;
 import ru.hzerr.configuration.database.repository.IEmailRepository;
@@ -28,6 +29,8 @@ public class CreateMailRuAccountEventProcessor extends AsyncActionEventProcessor
 
     @Override
     protected void onProcess(ActionEvent actionEvent) throws Exception {
+        Platform.runLater(() -> accounts.getScene().getRoot().setDisable(true));
+
         getLogProvider().getLogger().debug("Генерируем данные...");
         RandomData randomData = randomDataGenerator
                 .addFirstName()
@@ -41,11 +44,14 @@ public class CreateMailRuAccountEventProcessor extends AsyncActionEventProcessor
         getLogProvider().getLogger().debug(STR."Аккаунт \{record.getLogin()} успешно зарегистрирован в базе данных");
         accounts.getItems().add(record);
         getLogProvider().getLogger().debug("Операция создания аккаунта была отменена пользователем");
+
+        Platform.runLater(() -> accounts.getScene().getRoot().setDisable(false));
     }
 
     @Override
     protected void onFailure(Exception e) {
         getLogProvider().getLogger().error("CreateMailRuAccountEventProcessor", e);
+        Platform.runLater(() -> accounts.getScene().getRoot().setDisable(false));
     }
 
     @Include

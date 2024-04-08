@@ -10,7 +10,7 @@ public interface IEmailService {
      * @throws MailRuCreationCancelledException если процесс был отменен пользователем
      * @throws MailRuCreationEntityLoadException в случае ошибки загрузки entity
      * @throws MailRuCreationInterruptedException в случае прерывания процесса создания
-     * @throws MailRuUnknownFooterTextException в случае невозможности дальнейшего парсинга из-за неизвестного текста
+     * @throws MailRuUnknownFooterTextException в случае невозможности дальнейшего парсинга из-за обнаружения неизвестного текста
      */
     MailRuRecord create(RandomData data) throws MailRuCreationException;
 }

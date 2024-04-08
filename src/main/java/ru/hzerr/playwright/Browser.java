@@ -28,9 +28,7 @@ public class Browser implements AutoCloseable {
 
     @Override
     public void close() {
-        browserContext.close();
         browser.close();
-        playwright.close();
     }
 
     public static Browser create(BrowserOptions options) {

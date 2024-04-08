@@ -1,5 +1,6 @@
 package ru.hzerr.controller;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -58,7 +59,7 @@ public class MailRuAccountMasterController extends Controller {
                     @Override
                     public void onUpdateItem(MailRuRecord item, boolean empty) {
                         if (!empty) {
-                            setText(item.getLogin());
+                            Platform.runLater(() -> setText(item.getLogin()));
                         }
                     }
                 };

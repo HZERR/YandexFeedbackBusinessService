@@ -4,12 +4,14 @@ import com.google.common.base.Strings;
 import com.microsoft.playwright.ElementHandle;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
+import javafx.application.Platform;
 import javafx.scene.Parent;
 import ru.hzerr.configuration.application.IApplicationSettings;
 import ru.hzerr.controller.InputCaptchaController;
 import ru.hzerr.fx.engine.core.annotation.Include;
 import ru.hzerr.fx.engine.core.annotation.Registered;
 import ru.hzerr.fx.engine.core.annotation.as.ApplicationLogProvider;
+import ru.hzerr.fx.engine.core.concurrent.ExtendedCompletableFuture;
 import ru.hzerr.fx.engine.core.entity.IEntityLoader;
 import ru.hzerr.fx.engine.core.entity.SpringLoadMetaData;
 import ru.hzerr.fx.engine.core.entity.exception.LoadControllerException;
@@ -55,7 +57,7 @@ public class MailRuService implements IEmailService {
         logProvider.getLogger().debug("Запускаем браузер...");
         try (Browser browser = Browser.create(BrowserOptions.create()
                 .setBrowserType(BrowserType.CHROMIUM)
-                .setLaunchOptions(new com.microsoft.playwright.BrowserType.LaunchOptions().setHeadless(false)))) {
+                .setLaunchOptions(new com.microsoft.playwright.BrowserType.LaunchOptions().setHeadless(true)))) {
 
             try (Page page = browser.openPage("https://account.mail.ru/signup")) {
                 logProvider.getLogger().debug("Заполняем форму...");
@@ -154,6 +156,7 @@ public class MailRuService implements IEmailService {
         // if (ocrEnabled) {} else {} e.t.c
 
         InputCaptchaController controller;
+
         try {
             controller = entityLoader.view(SpringLoadMetaData.from(InputCaptchaController.class, (Object) captcha), Parent.class)
                     .getController();
