@@ -92,12 +92,27 @@ public class MailRuServiceSelectorNamingStrategy implements IMailRuServiceSelect
     }
 
     @Override
-    public String captchaSelector() {
+    public String captchaImageSelector() {
         return "#root > div > div.-iGylzk8u50zKdna3C_sh > div:nth-child(3) > div > div > div > form > div:nth-child(7) > img";
     }
 
     @Override
     public String errorSelector() {
         return "#root > div > div.-iGylzk8u50zKdna3C_sh > div:nth-child(3) > div > div > div > form > div:nth-child(7) > div > div.formRow-0-2-100 > div > div.error-0-2-102 > small";
+    }
+
+    @Override
+    public String captchaTextFieldSelector() {
+        return "#root > div > div.-iGylzk8u50zKdna3C_sh > div:nth-child(3) > div > div > div > form > div:nth-child(7) > div > div.formRow-0-2-100 > div > div > div > div > input";
+    }
+
+    @Override
+    public String applyCaptchaSelector() {
+        return "#root > div > div.-iGylzk8u50zKdna3C_sh > div:nth-child(3) > div > div > div > form > button.base-0-2-32.primary-0-2-46";
+    }
+
+    @Override
+    public String reloadCaptchaSelector() {
+        return "#root > div > div.-iGylzk8u50zKdna3C_sh > div:nth-child(3) > div > div > div > form > div:nth-child(7) > div > a";
     }
 }

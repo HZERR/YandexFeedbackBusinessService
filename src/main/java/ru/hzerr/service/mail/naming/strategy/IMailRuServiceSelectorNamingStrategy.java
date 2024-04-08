@@ -19,6 +19,13 @@ public interface IMailRuServiceSelectorNamingStrategy {
     String showReservedEmailInputSelector();
     String reservedEmailSelector();
     String switchCaptchaFormSelector();
-    String captchaSelector();
+    String captchaImageSelector();
     String errorSelector();
+    String captchaTextFieldSelector();
+    String applyCaptchaSelector();
+
+    /**
+     * КНОПКА 'НЕ ВИЖУ КОД'
+     */
+    String reloadCaptchaSelector();
 }

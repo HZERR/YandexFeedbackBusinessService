@@ -2,7 +2,6 @@ package ru.hzerr.controller;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -14,7 +13,6 @@ import ru.hzerr.fx.engine.core.annotation.FXEntity;
 import ru.hzerr.fx.engine.core.annotation.Include;
 import ru.hzerr.fx.engine.core.entity.Controller;
 import ru.hzerr.fx.engine.core.entity.EntityLoader;
-import ru.hzerr.fx.engine.core.entity.SpringLoadMetaData;
 import ru.hzerr.fx.engine.core.javafx.list.BasicCellFactory;
 import ru.hzerr.fx.engine.core.javafx.list.BasicListCell;
 import ru.hzerr.fx.engine.core.language.ILocalization;

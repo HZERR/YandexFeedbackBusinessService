@@ -15,7 +15,7 @@ import ru.hzerr.fx.engine.core.entity.SpringLoadMetaData;
 import ru.hzerr.fx.engine.core.entity.exception.LoadControllerException;
 import ru.hzerr.fx.engine.logging.provider.ILogProvider;
 import ru.hzerr.generator.ILoginGenerator;
-import ru.hzerr.generator.MailRuCreationInterruptedException;
+import ru.hzerr.service.mail.exception.*;
 import ru.hzerr.generator.RandomAlphanumericLoginGenerator;
 import ru.hzerr.generator.RandomData;
 import ru.hzerr.model.Gender;
@@ -29,7 +29,6 @@ import ru.hzerr.service.proxy.IProxyService;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.concurrent.ExecutionException;
 
 @Registered
 public class MailRuService implements IEmailService {
@@ -46,7 +45,7 @@ public class MailRuService implements IEmailService {
     private ILogProvider logProvider;
 
     @Override
-    public Response<MailRuRecord> create(RandomData data) throws MailRuCreationInterruptedException {
+    public MailRuRecord create(RandomData data) throws MailRuCreationException {
         MailRuRecord record = new MailRuRecord();
         record.setFirstName(data.getFirstName());
         record.setLastName(data.getLastName());
@@ -102,68 +101,72 @@ public class MailRuService implements IEmailService {
                 // click 'OK' button
                 page.click(namingStrategy.switchCaptchaFormSelector());
 
-                if (!bypass(page)) {
-                    // change
-                    return Response.from(404);
-                }
+                bypass(page);
 
-                // НАЧАТЬ ЧЕКАТЬ ОТСЮДА. ДОБАВИТЬ ВАЛИДАЦИЮ ПУСТОГО ТЕКСТА В InputCaptchaController
                 page.waitForURL(url -> url.contains("e.mail.ru/inbox"));
 
                 record.setCreated(true);
                 record.setCreatedDate(LocalDateTime.now());
                 logProvider.getLogger().debug(STR."Аккаунт успешно создан: \{record}");
-
-            } catch (InterruptedException | ExecutionException | LoadControllerException | IOException e) {
-                throw new RuntimeException(e);
             }
         }
 
-        return Response.from(record);
+        return record;
     }
 
-    private boolean bypass(Page page) throws ExecutionException, InterruptedException, LoadControllerException, IOException {
-        ElementHandle captchaLocator = page.waitForSelector(namingStrategy.captchaSelector());
+    private void bypass(Page page) throws MailRuCreationEntityLoadException, MailRuCreationInterruptedException, MailRuCreationCancelledException, MailRuUnknownFooterTextException {
+        ElementHandle captchaLocator = page.waitForSelector(namingStrategy.captchaImageSelector());
 
         // wait loading the captcha
-        Thread.sleep(2000);
+        sleep(2000);
 
         byte[] captcha = captchaLocator.screenshot();
 
         String decoded = decode(captcha);
 
-        if (Strings.isNullOrEmpty(decoded)) return false;
+        if (Strings.isNullOrEmpty(decoded)) {
+            throw new MailRuCreationCancelledException("Операция была прервана пользователем");
+        }
 
-        // decoded captcha
-        page.fill("#root > div > div.-iGylzk8u50zKdna3C_sh > div:nth-child(3) > div > div > div > form > div:nth-child(7) > div > div.formRow-0-2-100 > div > div > div > div > input", decoded);
-        // next
-        page.click("#root > div > div.-iGylzk8u50zKdna3C_sh > div:nth-child(3) > div > div > div > form > button.base-0-2-32.primary-0-2-46");
+        page.fill(namingStrategy.captchaTextFieldSelector(), decoded);
+        page.click(namingStrategy.applyCaptchaSelector());
 
         page.waitForLoadState(LoadState.NETWORKIDLE);
 
         ElementHandle errorElement = page.querySelector(namingStrategy.errorSelector());
         if (errorElement != null) {
-            if(errorElement.innerText().equalsIgnoreCase("Вы указали неправильный код с картинки")) {
-                // КНОПКА НЕ ВИЖУ КОД
-                page.click("#root > div > div.-iGylzk8u50zKdna3C_sh > div:nth-child(3) > div > div > div > form > div:nth-child(7) > div > a");
-                return bypass(page);
+            if (errorElement.innerText().equalsIgnoreCase("Вы указали неправильный код с картинки")) {
+
+                page.click(namingStrategy.reloadCaptchaSelector());
+                page.waitForLoadState(LoadState.NETWORKIDLE);
+
+                bypass(page);
+                return;
             }
 
             logProvider.getLogger().warn("Неизвестная ошибка отображаемая в error-footer-text: {}", errorElement.innerText());
+            throw new MailRuUnknownFooterTextException(STR."Неизвестная ошибка отображаемая в error-footer-text: \{errorElement.innerText()}");
         }
-
-        return true;
     }
 
-    private String decode(byte[] captcha) throws InterruptedException, LoadControllerException, IOException {
+    private String decode(byte[] captcha) throws MailRuCreationEntityLoadException, MailRuCreationInterruptedException {
         boolean ocrEnabled = applicationSettings.isOCREnabled();
         // if (ocrEnabled) {} else {} e.t.c
-        // maybe change view method non throws?
-        logProvider.getLogger().debug("Byte[]: {}", captcha);
-        InputCaptchaController controller = entityLoader.view(SpringLoadMetaData.from(InputCaptchaController.class, (Object) captcha), Parent.class)
-                .getController();
 
-        return controller.awaitDecodedCaptcha();
+        InputCaptchaController controller;
+        try {
+            controller = entityLoader.view(SpringLoadMetaData.from(InputCaptchaController.class, (Object) captcha), Parent.class)
+                    .getController();
+        } catch (IOException | LoadControllerException e) {
+            throw new MailRuCreationEntityLoadException(e.getMessage(), e);
+        }
+
+        try {
+            return controller.awaitDecodedCaptcha();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new MailRuCreationInterruptedException(e.getMessage(), e);
+        }
     }
 
     private boolean isInvalidLogin(Page page) {
@@ -175,7 +178,8 @@ public class MailRuService implements IEmailService {
         try {
             Thread.sleep(millis);
         } catch (InterruptedException ie) {
-            throw new MailRuCreationInterruptedException(ie);
+            Thread.currentThread().interrupt();
+            throw new MailRuCreationInterruptedException(ie.getMessage(), ie);
         }
     }
 
