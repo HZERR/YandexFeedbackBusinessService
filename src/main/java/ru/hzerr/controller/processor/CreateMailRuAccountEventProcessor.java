@@ -12,7 +12,6 @@ import ru.hzerr.generator.RandomDataToolsGenerator;
 import ru.hzerr.model.MailRuRecord;
 import ru.hzerr.service.mail.IEmailService;
 
-// TODO НАПИСАТЬ СПЯЩИЙ РЕЖИМ ПРОГРАММЫ ПРИ СОЗДАНИИ АККАУНТА
 @Registered
 public class CreateMailRuAccountEventProcessor extends AsyncActionEventProcessor {
 

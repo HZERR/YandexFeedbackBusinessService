@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" styleClass="container" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ProgressBar fx:id="progressBar" focusTraversable="false" layoutX="100.0" layoutY="245.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="400.0" progress="0.0" />
+      <Label fx:id="description" alignment="CENTER" focusTraversable="false" layoutX="125.0" layoutY="248.0" prefHeight="18.0" prefWidth="350.0" styleClass="description" text="Запуск браузера...">
+         <font>
+            <Font name="Bell MT" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="title" alignment="CENTER" focusTraversable="false" layoutX="125.0" layoutY="21.0" prefHeight="30.0" prefWidth="350.0" styleClass="title" text="Создание почтового ящика" />
+   </children>
+</AnchorPane>

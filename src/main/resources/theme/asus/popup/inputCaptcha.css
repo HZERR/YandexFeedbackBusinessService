@@ -8,7 +8,7 @@
 .title {
     -fx-font-family: "Source Code Pro";
     -fx-font-size: 19px;
-    -fx-text-fill: white;
+    -fx-text-fill: #00BCD4;
 }
 
 .create,

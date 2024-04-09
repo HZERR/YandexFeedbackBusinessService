@@ -1,0 +1,12 @@
+{
+  "title": "Создание почтового ящика",
+  "progress.set.random.data": "Устанавливаем рандомные значения...",
+  "progress.browser.launch": "Запуск браузера...",
+  "progress.filling.form": "Заполнение формы...",
+  "progress.getting.captcha.image.as.bytes": "Получаем данные изображения капчи...",
+  "progress.sending.captcha.image.to.ocr.server": "Отправляем данные на сервер OCR...",
+  "progress.reading.response.from.ocr.server": "Получаем данные с сервера OCR...",
+  "progress.substitute.recognize.data.into.form": "Подставляем распознанные данные в форму...",
+  "progress.validate.recognize.data": "Проверяем валидность полученных данных...",
+  "progress.success": "Почта была успешно создана!"
+}

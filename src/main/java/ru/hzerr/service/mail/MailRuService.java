@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import javafx.scene.Parent;
 import ru.hzerr.configuration.application.IApplicationSettings;
 import ru.hzerr.controller.InputCaptchaController;
+import ru.hzerr.controller.MailRuCreationProgressController;
 import ru.hzerr.fx.engine.core.annotation.Include;
 import ru.hzerr.fx.engine.core.annotation.Registered;
 import ru.hzerr.fx.engine.core.annotation.as.ApplicationLogProvider;
@@ -46,8 +47,13 @@ public class MailRuService implements IEmailService {
 
     private ILogProvider logProvider;
 
+    private MailRuCreationProgressController progressController;
+
     @Override
     public MailRuRecord create(RandomData data) throws MailRuCreationException {
+        prepareProgressController();
+        progressController.setProgressAsSetUpRandomData();
+
         MailRuRecord record = new MailRuRecord();
         record.setFirstName(data.getFirstName());
         record.setLastName(data.getLastName());
@@ -55,12 +61,16 @@ public class MailRuService implements IEmailService {
         record.setDateOfBirth(data.getDateOfBirth());
 
         logProvider.getLogger().debug("Запускаем браузер...");
+        progressController.setProgressAsLaunchBrowser();
+
         try (Browser browser = Browser.create(BrowserOptions.create()
                 .setBrowserType(BrowserType.CHROMIUM)
                 .setLaunchOptions(new com.microsoft.playwright.BrowserType.LaunchOptions().setHeadless(true)))) {
 
             try (Page page = browser.openPage("https://account.mail.ru/signup")) {
                 logProvider.getLogger().debug("Заполняем форму...");
+                progressController.setProgressAsFillingForm();
+
                 page.waitForLoadState(LoadState.NETWORKIDLE);
 
                 page.fill(namingStrategy.firstNameSelector(), record.getFirstName());
@@ -114,6 +124,14 @@ public class MailRuService implements IEmailService {
         }
 
         return record;
+    }
+
+    private void prepareProgressController() throws MailRuCreationEntityLoadException {
+        try {
+            progressController = entityLoader.view(SpringLoadMetaData.from(MailRuCreationProgressController.class), Parent.class).getController();
+        } catch (IOException | LoadControllerException e) {
+            throw new MailRuCreationEntityLoadException(e.getMessage(), e);
+        }
     }
 
     private void bypass(Page page) throws MailRuCreationEntityLoadException, MailRuCreationInterruptedException, MailRuCreationCancelledException, MailRuUnknownFooterTextException {

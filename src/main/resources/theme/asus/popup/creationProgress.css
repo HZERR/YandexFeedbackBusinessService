@@ -1,0 +1,27 @@
+.container {
+    -fx-background-image: url("../../../images/InputCaptchaBackground.png");
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 600 300;
+}
+
+.title {
+    -fx-font-family: "Source Code Pro";
+    -fx-font-size: 19px;
+    -fx-text-fill: #00BCD4;
+}
+
+.progress-bar > .track {
+    -fx-background-color: rgba(0, 0, 0, 0.3);
+}
+
+.progress-bar > .bar {
+    /*-fx-background-color: linear-gradient(to right, rgba(80, 255, 109, 0.5), rgba(106, 90, 205, 0.5));*/
+    -fx-background-color: rgba(0, 0, 0, 0.2);
+}
+
+.description {
+    -fx-text-fill: #00ff00;
+    -fx-font-size: 14px;
+    -fx-font-family: "Montserrat Medium";
+}
