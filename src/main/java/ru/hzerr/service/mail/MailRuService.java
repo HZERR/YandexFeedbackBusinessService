@@ -1,6 +1,7 @@
 package ru.hzerr.service.mail;
 
 import com.google.common.base.Strings;
+import com.google.common.base.Throwables;
 import com.microsoft.playwright.ElementHandle;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
@@ -51,79 +52,93 @@ public class MailRuService implements IEmailService {
 
     @Override
     public MailRuRecord create(RandomData data) throws MailRuCreationException {
-        prepareProgressController();
-        progressController.setProgressAsSetUpRandomData();
+        try {
+            prepareProgressController();
+            progressController.setProgressAsSetUpRandomData();
 
-        MailRuRecord record = new MailRuRecord();
-        record.setFirstName(data.getFirstName());
-        record.setLastName(data.getLastName());
-        record.setGender(data.getGender());
-        record.setDateOfBirth(data.getDateOfBirth());
+            MailRuRecord record = new MailRuRecord();
+            record.setFirstName(data.getFirstName());
+            record.setLastName(data.getLastName());
+            record.setGender(data.getGender());
+            record.setDateOfBirth(data.getDateOfBirth());
 
-        logProvider.getLogger().debug("Запускаем браузер...");
-        progressController.setProgressAsLaunchBrowser();
+            logProvider.getLogger().debug("Запускаем браузер...");
+            progressController.setProgressAsLaunchBrowser();
 
-        try (Browser browser = Browser.create(BrowserOptions.create()
-                .setBrowserType(BrowserType.CHROMIUM)
-                .setLaunchOptions(new com.microsoft.playwright.BrowserType.LaunchOptions().setHeadless(true)))) {
+            try (Browser browser = Browser.create(BrowserOptions.create()
+                    .setBrowserType(BrowserType.CHROMIUM)
+                    .setLaunchOptions(new com.microsoft.playwright.BrowserType.LaunchOptions().setHeadless(true)))) {
 
-            try (Page page = browser.openPage("https://account.mail.ru/signup")) {
-                logProvider.getLogger().debug("Заполняем форму...");
-                progressController.setProgressAsFillingForm();
+                try (Page page = browser.openPage("https://account.mail.ru/signup")) {
+                    logProvider.getLogger().debug("Заполняем форму...");
+                    progressController.setProgressAsFillingForm();
 
-                page.waitForLoadState(LoadState.NETWORKIDLE);
+                    page.waitForLoadState(LoadState.NETWORKIDLE);
 
-                page.fill(namingStrategy.firstNameSelector(), record.getFirstName());
-                page.fill(namingStrategy.lastNameSelector(), record.getLastName());
+                    page.fill(namingStrategy.firstNameSelector(), record.getFirstName());
+                    page.fill(namingStrategy.lastNameSelector(), record.getLastName());
 
-                String[] dateOfBirth = record.getDateOfBirth().split("\\.");
+                    String[] dateOfBirth = record.getDateOfBirth().split("\\.");
 
-                page.click(namingStrategy.openDaysSelector());
-                page.click(namingStrategy.calculateTargetDaySelector(dateOfBirth[0]));
+                    page.click(namingStrategy.openDaysSelector());
+                    page.click(namingStrategy.calculateTargetDaySelector(dateOfBirth[0]));
 
-                page.click(namingStrategy.openMonthsSelector());
-                page.click(namingStrategy.calculateTargetMonthSelector(dateOfBirth[1]));
+                    page.click(namingStrategy.openMonthsSelector());
+                    page.click(namingStrategy.calculateTargetMonthSelector(dateOfBirth[1]));
 
-                page.click(namingStrategy.openYearsSelector());
-                page.click(namingStrategy.calculateTargetYearSelector(dateOfBirth[2]));
+                    page.click(namingStrategy.openYearsSelector());
+                    page.click(namingStrategy.calculateTargetYearSelector(dateOfBirth[2]));
 
-                page.click(record.getGender() == Gender.FEMALE ?
-                        namingStrategy.femaleSelector() :
-                        namingStrategy.maleSelector());
+                    page.click(record.getGender() == Gender.FEMALE ?
+                            namingStrategy.femaleSelector() :
+                            namingStrategy.maleSelector());
 
-                do {
-                    record.setLogin(loginGenerator.generate());
-                    page.fill(namingStrategy.loginSelector(), record.getLogin());
-                    sleep(1000);
-                } while (isInvalidLogin(page));
-                record.setLogin(STR."\{record.getLogin()}@mail.ru");
+                    do {
+                        record.setLogin(loginGenerator.generate());
+                        page.fill(namingStrategy.loginSelector(), record.getLogin());
+                        sleep(1000);
+                    } while (isInvalidLogin(page));
+                    record.setLogin(STR."\{record.getLogin()}@mail.ru");
 
-                page.click(namingStrategy.generatePasswordSelector());
-                record.setPassword(page.locator("#password").inputValue());
+                    page.click(namingStrategy.generatePasswordSelector());
+                    record.setPassword(page.locator("#password").inputValue());
 
-                page.click(namingStrategy.changeFocusSelector());
+                    page.click(namingStrategy.changeFocusSelector());
 
-                page.click(namingStrategy.showReservedEmailInputSelector());
+                    page.click(namingStrategy.showReservedEmailInputSelector());
 
-                record.setReservedEmail("vadimvyazloy@yandex.ru");
-                page.fill(namingStrategy.reservedEmailSelector(), record.getReservedEmail());
+                    record.setReservedEmail("vadimvyazloy@yandex.ru");
+                    page.fill(namingStrategy.reservedEmailSelector(), record.getReservedEmail());
 
-                // if proxy invalid => change proxy and reload form
+                    // if proxy invalid => change proxy and reload form
 
-                // click 'OK' button
-                page.click(namingStrategy.switchCaptchaFormSelector());
+                    // click 'OK' button
+                    page.click(namingStrategy.switchCaptchaFormSelector());
 
-                bypass(page);
+                    bypass(page);
 
-                page.waitForURL(url -> url.contains("e.mail.ru/inbox"));
+                    page.waitForURL(url -> url.contains("e.mail.ru/inbox"));
 
-                record.setCreated(true);
-                record.setCreatedDate(LocalDateTime.now());
-                logProvider.getLogger().debug(STR."Аккаунт успешно создан: \{record}");
+                    progressController.setProgressAsSuccess();
+
+                    record.setCreated(true);
+                    record.setCreatedDate(LocalDateTime.now());
+                    logProvider.getLogger().debug(STR."Аккаунт успешно создан: \{record}");
+                }
             }
-        }
 
-        return record;
+            return record;
+        } catch (MailRuCreationException creationException) {
+            if (!(creationException instanceof MailRuCreationCancelledException)) {
+                logProvider.getLogger().error(creationException.getMessage(), creationException);
+            }
+
+            if (progressController != null) {
+                progressController.onDestroy();
+            }
+
+            throw creationException;
+        }
     }
 
     private void prepareProgressController() throws MailRuCreationEntityLoadException {
@@ -135,6 +150,8 @@ public class MailRuService implements IEmailService {
     }
 
     private void bypass(Page page) throws MailRuCreationEntityLoadException, MailRuCreationInterruptedException, MailRuCreationCancelledException, MailRuUnknownFooterTextException {
+        progressController.setProgressAsGettingCaptchaImage();
+
         ElementHandle captchaLocator = page.waitForSelector(namingStrategy.captchaImageSelector());
 
         // wait loading the captcha
@@ -142,16 +159,22 @@ public class MailRuService implements IEmailService {
 
         byte[] captcha = captchaLocator.screenshot();
 
+        progressController.temporarilyHide();
         String decoded = decode(captcha);
+        progressController.temporarilyShow();
 
         if (Strings.isNullOrEmpty(decoded)) {
             throw new MailRuCreationCancelledException("Операция была прервана пользователем");
         }
 
+        progressController.setProgressAsSubstituteRecognizeData();
+
         page.fill(namingStrategy.captchaTextFieldSelector(), decoded);
         page.click(namingStrategy.applyCaptchaSelector());
 
         page.waitForLoadState(LoadState.NETWORKIDLE);
+
+        progressController.setProgressAsCheckRecognizeData();
 
         ElementHandle errorElement = page.querySelector(namingStrategy.errorSelector());
         if (errorElement != null) {

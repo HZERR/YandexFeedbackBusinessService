@@ -11,6 +11,8 @@ import ru.hzerr.generator.RandomData;
 import ru.hzerr.generator.RandomDataToolsGenerator;
 import ru.hzerr.model.MailRuRecord;
 import ru.hzerr.service.mail.IEmailService;
+import ru.hzerr.service.mail.exception.MailRuCreationCancelledException;
+import ru.hzerr.service.mail.exception.MailRuCreationException;
 
 @Registered
 public class CreateMailRuAccountEventProcessor extends AsyncActionEventProcessor {
@@ -38,7 +40,13 @@ public class CreateMailRuAccountEventProcessor extends AsyncActionEventProcessor
                 .addGender()
                 .generate();
 
-        MailRuRecord record = emailService.create(randomData);
+        MailRuRecord record;
+        try {
+            record = emailService.create(randomData);
+        } catch (MailRuCreationCancelledException e) {
+            return;
+        }
+
         repository.addEmail(record);
         getLogProvider().getLogger().debug(STR."Аккаунт \{record.getLogin()} успешно зарегистрирован в базе данных");
         accounts.getItems().add(record);
@@ -49,7 +57,7 @@ public class CreateMailRuAccountEventProcessor extends AsyncActionEventProcessor
 
     @Override
     protected void onFailure(Exception e) {
-        getLogProvider().getLogger().error("CreateMailRuAccountEventProcessor", e);
+        getLogProvider().getLogger().error(e.getMessage(), e);
         Platform.runLater(() -> accounts.getScene().getRoot().setDisable(false));
     }
 

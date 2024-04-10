@@ -3,8 +3,8 @@ package ru.hzerr.controller;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -43,13 +43,19 @@ public class MailRuCreationProgressController extends PopupController {
     }
 
     @Override
+    public void onDestroy() {
+        Platform.runLater(popup::hide);
+        super.onDestroy();
+    }
+
+    @Override
     public void onConnectDestroyEvent() {
         // вызов метода onDestroy должен быть выполнен извне или в другом методе данного контроллера
     }
 
     public void setProgressAsSetUpRandomData() {
         acceptLocalizationProvider(localizationProvider -> {
-            description.setText(localizationProvider.getLocalization().getConfiguration().getString("progress.set.random.data"));
+            Platform.runLater(() -> description.setText(localizationProvider.getLocalization().getConfiguration().getString("progress.setRandomData")));
         });
 
         Timeline timeline = new Timeline();
@@ -59,7 +65,7 @@ public class MailRuCreationProgressController extends PopupController {
 
     public void setProgressAsLaunchBrowser() {
         acceptLocalizationProvider(localizationProvider -> {
-            description.setText(localizationProvider.getLocalization().getConfiguration().getString("progress.browser.launch"));
+            Platform.runLater(() -> description.setText(localizationProvider.getLocalization().getConfiguration().getString("progress.browserLaunch")));
         });
 
         Timeline timeline = new Timeline();
@@ -69,7 +75,7 @@ public class MailRuCreationProgressController extends PopupController {
 
     public void setProgressAsFillingForm() {
         acceptLocalizationProvider(localizationProvider -> {
-            description.setText(localizationProvider.getLocalization().getConfiguration().getString("progress.filling.form"));
+            Platform.runLater(() -> description.setText(localizationProvider.getLocalization().getConfiguration().getString("progress.fillingForm")));
         });
 
         Timeline timeline = new Timeline();
@@ -79,7 +85,7 @@ public class MailRuCreationProgressController extends PopupController {
 
     public void setProgressAsGettingCaptchaImage() {
         acceptLocalizationProvider(localizationProvider -> {
-            description.setText(localizationProvider.getLocalization().getConfiguration().getString("progress.getting.captcha.image.as.bytes"));
+            Platform.runLater(() -> description.setText(localizationProvider.getLocalization().getConfiguration().getString("progress.gettingCaptchaImageAsBytes")));
         });
 
         Timeline timeline = new Timeline();
@@ -89,7 +95,7 @@ public class MailRuCreationProgressController extends PopupController {
 
     public void setProgressAsSubstituteRecognizeData() {
         acceptLocalizationProvider(localizationProvider -> {
-            description.setText(localizationProvider.getLocalization().getConfiguration().getString("progress.substitute.recognize.data.into.form"));
+            Platform.runLater(() -> description.setText(localizationProvider.getLocalization().getConfiguration().getString("progress.substituteRecognizeDataIntoForm")));
         });
 
         Timeline timeline = new Timeline();
@@ -99,7 +105,7 @@ public class MailRuCreationProgressController extends PopupController {
 
     public void setProgressAsCheckRecognizeData() {
         acceptLocalizationProvider(localizationProvider -> {
-            description.setText(localizationProvider.getLocalization().getConfiguration().getString("progress.validate.recognize.data"));
+            Platform.runLater(() -> description.setText(localizationProvider.getLocalization().getConfiguration().getString("progress.validateRecognizeData")));
         });
 
         Timeline timeline = new Timeline();
@@ -109,12 +115,12 @@ public class MailRuCreationProgressController extends PopupController {
 
     public void setProgressAsSuccess() {
         acceptLocalizationProvider(localizationProvider -> {
-            description.setText(localizationProvider.getLocalization().getConfiguration().getString("progress.success"));
+            Platform.runLater(() -> description.setText(localizationProvider.getLocalization().getConfiguration().getString("progress.success")));
         });
 
         Timeline timeline = new Timeline();
         timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), new KeyValue(progressBar.progressProperty(), 1)));
-        timeline.setOnFinished(event -> popup.hide());
+        timeline.setOnFinished(event -> onDestroy());
         timeline.play();
     }
 
@@ -142,7 +148,7 @@ public class MailRuCreationProgressController extends PopupController {
         Subscription heightSubscription = heightPopupProperty.subscribe(nValue -> popup.setHeight((double) nValue));
         Subscription widthSubscription = widthPopupProperty.subscribe(nValue -> popup.setWidth((double) nValue));
 
-        view();
+        Platform.runLater(this::view);
 
         Timeline timeline = new Timeline();
         timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), new KeyValue(heightPopupProperty, popupHeight), new KeyValue(widthPopupProperty, popupWidth)));

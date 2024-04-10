@@ -1,12 +1,14 @@
 {
   "title": "Creating a mailbox",
-  "progress.set.random.data": "Set random values...",
-  "progress.browser.launch": "Browser launch...",
-  "progress.filling.form": "Filling out a form...",
-  "progress.getting.captcha.image.as.bytes": "Retrieving captcha image data...",
-  "progress.sending.captcha.image.to.ocr.server": "Sending the data to the OCR server...",
-  "progress.reading.response.from.ocr.server": "Retrieving data from the OCR server...",
-  "progress.substitute.recognize.data.into.form": "Substitute the recognized data into the form...",
-  "progress.validate.recognize.data": "Checking the validity of the obtained data...",
-  "progress.success": "The mail has been successfully created!"
+  "progress": {
+    "setRandomData": "Set random values...",
+    "browserLaunch": "Browser launch...",
+    "fillingForm": "Filling out a form...",
+    "gettingCaptchaImageAsBytes": "Retrieving captcha image data...",
+    "sendingCaptchaImageToOCRServer": "Sending the data to the OCR server...",
+    "readingResponseFromOCRServer": "Retrieving data from the OCR server...",
+    "substituteRecognizeDataIntoForm": "Substitute the recognized data into the form...",
+    "validateRecognizeData": "Checking the validity of the obtained data...",
+    "success": "The mail has been successfully created!"
+  }
 }

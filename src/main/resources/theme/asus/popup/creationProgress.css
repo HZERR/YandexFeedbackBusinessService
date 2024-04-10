@@ -16,8 +16,8 @@
 }
 
 .progress-bar > .bar {
-    /*-fx-background-color: linear-gradient(to right, rgba(80, 255, 109, 0.5), rgba(106, 90, 205, 0.5));*/
-    -fx-background-color: rgba(0, 0, 0, 0.2);
+    -fx-background-color: linear-gradient(to right, rgba(80, 255, 109, 0.5), rgba(106, 90, 205, 0.5));
+    /*-fx-background-color: rgba(0, 0, 0, 0.2);*/
 }
 
 .description {
